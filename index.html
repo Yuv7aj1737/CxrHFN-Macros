@@ -1,361 +1,984 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MacroCraft — Minecraft Macros</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>CxrHFN — Minecraft Macros</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        /* =========================
+           AUTH BUTTONS
+        ========================= */
+
+        .nav-actions {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+        }
+
+
+        .auth-button {
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+
+            cursor: pointer;
+
+        }
+
+
+        .login-button {
+
+            color: #9aa8bd;
+
+            border:
+                1px solid
+                rgba(90, 120, 160, 0.25);
+
+            background:
+                rgba(10, 16, 29, 0.6);
+
+        }
+
+
+        .login-button:hover {
+
+            color: white;
+
+            border-color:
+                rgba(76, 174, 255, 0.4);
+
+        }
+
+
+        .signup-button {
+
+            color: white;
+
+            background: #3e9df5;
+
+        }
+
+
+        .signup-button:hover {
+
+            background: #55acff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .dashboard-button {
+
+            color: white;
+
+            background: #3e9df5;
+
+        }
+
+
+        .dashboard-button:hover {
+
+            background: #55acff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .logout-button {
+
+            color: #ff9a9a;
+
+            border:
+                1px solid
+                rgba(255, 100, 100, 0.2);
+
+            background:
+                rgba(100, 20, 20, 0.15);
+
+        }
+
+
+        .logout-button:hover {
+
+            color: white;
+
+            background:
+                rgba(180, 40, 40, 0.25);
+
+        }
+
+
+
+        /* =========================
+           PRODUCT IMAGE AREA
+        ========================= */
+
+        .product-image {
+
+            position: relative;
+
+            min-height: 230px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+        }
+
+
+
+        /* =========================
+           MACRO IMAGES
+        ========================= */
+
+        .macro-image {
+
+            width: 145px;
+
+            height: 145px;
+
+            object-fit: contain;
+
+            display: block;
+
+            position: relative;
+
+            z-index: 2;
+
+            filter:
+
+                drop-shadow(
+                    0 0 10px
+                    rgba(70, 170, 255, 0.9)
+                )
+
+                drop-shadow(
+                    0 0 25px
+                    rgba(70, 170, 255, 0.65)
+                )
+
+                drop-shadow(
+                    0 0 45px
+                    rgba(70, 170, 255, 0.35)
+                );
+
+            animation:
+                macroFloat
+                4s
+                ease-in-out
+                infinite;
+
+        }
+
+
+
+        /* =========================
+           FLOATING ANIMATION
+        ========================= */
+
+        @keyframes macroFloat {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+            }
+
+
+            50% {
+
+                transform:
+                    translateY(-10px)
+                    rotate(3deg);
+
+            }
+
+        }
+
+
+
+        /* =========================
+           AVAILABLE LABEL
+        ========================= */
+
+        .available-label {
+
+            position: absolute;
+
+            bottom: 12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 5;
+
+            white-space: nowrap;
+
+        }
+
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-actions {
+
+                gap: 5px;
+
+            }
+
+
+            .auth-button {
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+
+            }
+
+
+            .macro-image {
+
+                width: 120px;
+
+                height: 120px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 
 <body>
 
+
     <!-- =========================
          NAVBAR
-    ========================== -->
+    ========================= -->
 
     <header class="navbar">
 
+
         <div class="brand">
+
             <span class="brand-dot"></span>
-            MacroCraft
+
+            CxrHFN
+
         </div>
 
-        <div class="nav-status">
-            Minecraft Macros
-        </div>
-
-    </header>
 
 
-    <!-- =========================
-         HERO
-    ========================== -->
+        <!-- LOGGED OUT -->
 
-    <section class="hero">
+        <div
+            class="nav-actions"
+            id="loggedOutButtons"
+        >
 
-        <div class="hero-content">
+            <a
+                href="login.html"
+                class="auth-button login-button"
+            >
 
-            <div class="small-tag">
-                ⚡ MINECRAFT MACROS
-            </div>
+                Login
 
-            <h1>
-                Dominate Your
-                <span>CPvP.</span>
-            </h1>
+            </a>
 
-            <p>
-                Powerful and easy-to-use Minecraft macros
-                designed for competitive PvP.
-            </p>
 
-            <a href="#store" class="hero-button">
-                View CPvP Macro →
+            <a
+                href="signup.html"
+                class="auth-button signup-button"
+            >
+
+                Sign Up
+
             </a>
 
         </div>
 
 
-        <!-- CRYSTAL -->
 
-        <div class="crystal-area">
+        <!-- LOGGED IN -->
 
-            <div class="glow"></div>
+        <div
+            class="nav-actions"
+            id="loggedInButtons"
+            style="display: none;"
+        >
 
-            <div class="crystal">
+            <a
+                href="dashboard.html"
+                class="auth-button dashboard-button"
+            >
 
-                <div class="crystal-top"></div>
+                Dashboard
 
-                <div class="crystal-body"></div>
+            </a>
 
-                <div class="crystal-bottom"></div>
+
+            <button
+                id="logoutButton"
+                class="auth-button logout-button"
+            >
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="small-tag">
+
+                ⚡ MINECRAFT MACROS
 
             </div>
 
+
+            <h1>
+
+                Dominate Your
+
+                <span>CPvP.</span>
+
+            </h1>
+
+
+            <p>
+
+                Powerful and easy-to-use Minecraft macros
+                designed for competitive PvP.
+
+            </p>
+
+
+            <a
+                href="#store"
+                class="hero-button"
+            >
+
+                View CPvP Macro →
+
+            </a>
+
+
         </div>
+
 
     </section>
 
 
+
     <!-- =========================
          STORE
-    ========================== -->
+    ========================= -->
 
     <main id="store">
 
+
         <div class="section-heading">
 
-            <span>OUR MACROS</span>
 
-            <h2>Choose Your Macro</h2>
+            <span>
+
+                OUR MACROS
+
+            </span>
+
+
+            <h2>
+
+                Choose Your Macro
+
+            </h2>
+
 
             <p>
+
                 Start with CPvP. More macros are coming soon.
+
             </p>
+
 
         </div>
 
 
-        <!-- PRODUCT GRID -->
 
         <div class="products">
 
 
+
             <!-- =========================
                  CPVP MACRO
-            ========================== -->
+            ========================= -->
 
             <article class="product-card available">
 
-                <div class="product-image cpvp-image">
 
-                    <div class="mini-crystal">
-                        <div></div>
-                    </div>
+                <div class="product-image">
+
+
+                    <img
+                        src="images/end-crystal.png"
+                        alt="CPvP Macro"
+                        class="macro-image"
+                    >
+
 
                     <div class="available-label">
+
                         ● AVAILABLE
+
                     </div>
+
 
                 </div>
 
 
+
                 <div class="product-content">
 
+
                     <div class="product-category">
+
                         MINECRAFT • PVP
+
                     </div>
 
+
                     <h3>
+
                         CPvP Macro
+
                     </h3>
 
+
                     <p>
+
                         A powerful macro designed for
                         crystal PvP gameplay.
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <div class="price">
-                            $4.99
+
+                            ₹299
+
                         </div>
 
-                        <a href="./cpvp.html" class="buy-button">
+
+                        <a
+                            href="cpvp.html"
+                            class="buy-button"
+                        >
+
                             Buy Now
+
                         </a>
+
 
                     </div>
 
+
                 </div>
 
+
             </article>
+
 
 
             <!-- =========================
                  SWORD MACRO
-            ========================== -->
+            ========================= -->
 
             <article class="product-card coming-soon">
 
+
                 <div class="product-image">
 
-                    <div class="coming-text">
-                        COMING SOON
-                    </div>
+
+                    <img
+                        src="images/sword.png"
+                        alt="Sword Macro"
+                        class="macro-image"
+                    >
+
 
                 </div>
 
 
+
                 <div class="product-content">
 
+
                     <div class="product-category">
+
                         MINECRAFT • PVP
+
                     </div>
 
+
                     <h3>
+
                         Sword Macro
+
                     </h3>
 
+
                     <p>
+
                         Advanced sword PvP macro.
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <div class="soon-price">
+
                             Coming Soon
+
                         </div>
+
 
                     </div>
 
+
                 </div>
 
+
             </article>
+
 
 
             <!-- =========================
                  MACE MACRO
-            ========================== -->
+            ========================= -->
 
             <article class="product-card coming-soon">
 
+
                 <div class="product-image">
 
-                    <div class="coming-text">
-                        COMING SOON
-                    </div>
+
+                    <img
+                        src="images/mace.png"
+                        alt="Mace Macro"
+                        class="macro-image"
+                    >
+
 
                 </div>
 
 
+
                 <div class="product-content">
 
+
                     <div class="product-category">
+
                         MINECRAFT • PVP
+
                     </div>
 
+
                     <h3>
+
                         Mace Macro
+
                     </h3>
 
+
                     <p>
+
                         Powerful mace PvP utilities.
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <div class="soon-price">
+
                             Coming Soon
+
                         </div>
+
 
                     </div>
 
+
                 </div>
 
+
             </article>
+
 
 
             <!-- =========================
                  UHC MACRO
-            ========================== -->
+            ========================= -->
 
             <article class="product-card coming-soon">
 
+
                 <div class="product-image">
 
-                    <div class="coming-text">
-                        COMING SOON
-                    </div>
+
+                    <img
+                        src="images/uhc.png"
+                        alt="UHC Macro"
+                        class="macro-image"
+                    >
+
 
                 </div>
 
 
+
                 <div class="product-content">
 
+
                     <div class="product-category">
+
                         MINECRAFT • UHC
+
                     </div>
 
+
                     <h3>
+
                         UHC Macro
+
                     </h3>
 
+
                     <p>
+
                         Useful macros built for UHC gameplay.
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <div class="soon-price">
+
                             Coming Soon
+
                         </div>
+
 
                     </div>
 
+
                 </div>
 
+
             </article>
+
 
 
             <!-- =========================
                  ALL IN ONE
-            ========================== -->
+            ========================= -->
 
-            <article class="product-card coming-soon all-in-one">
+            <article
+                class="product-card coming-soon all-in-one"
+            >
+
 
                 <div class="product-image">
 
+
                     <div class="coming-text">
+
                         COMING SOON
+
                     </div>
+
 
                 </div>
 
 
+
                 <div class="product-content">
 
+
                     <div class="product-category">
+
                         MINECRAFT • PACK
+
                     </div>
 
+
                     <h3>
+
                         All-in-One
+
                     </h3>
 
+
                     <p>
+
                         Everything in one complete macro pack.
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <div class="soon-price">
+
                             Coming Soon
+
                         </div>
+
 
                     </div>
 
+
                 </div>
+
 
             </article>
 
 
         </div>
 
+
     </main>
+
 
 
     <!-- =========================
          FOOTER
-    ========================== -->
+    ========================= -->
 
     <footer>
 
+
         <div class="footer-brand">
-            MacroCraft
+
+            CxrHFN
+
         </div>
 
+
         <p>
+
             Minecraft macros made simple.
+
         </p>
 
+
         <span>
-            © 2026 MacroCraft
+
+            © 2026 CxrHFN
+
         </span>
+
 
     </footer>
 
 
-    <script src="script.js"></script>
+
+    <!-- =========================
+         SUPABASE AUTH
+    ========================= -->
+
+    <script>
+
+
+        const SUPABASE_URL =
+            "https://bcrewixxvendicfxbfpb.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_u6Hkn8hGCiAue-llQ9pJLA_ZHbwcmas";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        const loggedOutButtons =
+            document.getElementById(
+                "loggedOutButtons"
+            );
+
+
+        const loggedInButtons =
+            document.getElementById(
+                "loggedInButtons"
+            );
+
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        async function updateNavbar() {
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                console.error(error);
+
+                return;
+
+            }
+
+
+            const session =
+                data.session;
+
+
+            if (session) {
+
+                loggedOutButtons.style.display =
+                    "none";
+
+                loggedInButtons.style.display =
+                    "flex";
+
+            } else {
+
+                loggedOutButtons.style.display =
+                    "flex";
+
+                loggedInButtons.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        logoutButton.addEventListener(
+            "click",
+            async () => {
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient.auth.signOut();
+
+
+                if (error) {
+
+                    console.error(error);
+
+                    return;
+
+                }
+
+
+                updateNavbar();
+
+            }
+        );
+
+
+        supabaseClient.auth.onAuthStateChange(
+            () => {
+
+                updateNavbar();
+
+            }
+        );
+
+
+        updateNavbar();
+
+
+    </script>
+
 
 </body>
 
 </html>
+```
