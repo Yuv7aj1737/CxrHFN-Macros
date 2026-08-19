@@ -1,282 +1,1185 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CPvP Macro — MacroCraft</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="cpvp.css">
+    <title>CPvP Macro — CxrHFN</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- RAZORPAY -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+    <style>
+
+        body {
+            min-height: 100vh;
+        }
+
+
+        .payment-page {
+
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            padding: 80px 20px;
+
+        }
+
+
+        .back-button {
+
+            display: inline-block;
+
+            margin-bottom: 30px;
+
+            color: #9aa8bd;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-button:hover {
+            color: white;
+        }
+
+
+        .payment-header {
+
+            text-align: center;
+
+            margin-bottom: 45px;
+
+        }
+
+
+        .payment-header .tag {
+
+            color: #4caeff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .payment-header h1 {
+
+            font-size: 42px;
+
+            margin: 0 0 12px;
+
+        }
+
+
+        .payment-header p {
+
+            color: #9aa8bd;
+
+            margin: 0;
+
+        }
+
+
+        .plans {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .plan {
+
+            position: relative;
+
+            padding: 28px 20px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid
+                rgba(90,120,160,0.22);
+
+            background:
+                rgba(10,16,29,0.75);
+
+            text-align: center;
+
+            transition: 0.25s;
+
+        }
+
+
+        .plan:hover {
+
+            transform: translateY(-6px);
+
+            border-color:
+                rgba(76,174,255,0.5);
+
+        }
+
+
+        .plan.popular {
+
+            border-color: #3e9df5;
+
+            box-shadow:
+                0 0 30px
+                rgba(62,157,245,0.12);
+
+        }
+
+
+        .popular-label {
+
+            position: absolute;
+
+            top: -12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            background: #3e9df5;
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+
+        .plan h2 {
+
+            margin: 0 0 12px;
+
+            font-size: 20px;
+
+        }
+
+
+        .plan-price {
+
+            font-size: 34px;
+
+            font-weight: 900;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .plan-duration {
+
+            color: #8492a6;
+
+            font-size: 12px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .buy-plan {
+
+            width: 100%;
+
+            border: 0;
+
+            padding: 12px 15px;
+
+            border-radius: 9px;
+
+            background: #3e9df5;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .buy-plan:hover {
+
+            background: #55acff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .buy-plan:disabled {
+
+            opacity: 0.6;
+
+            cursor: wait;
+
+            transform: none;
+
+        }
+
+
+        .status {
+
+            display: none;
+
+            max-width: 600px;
+
+            margin: 30px auto 0;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+        }
+
+
+        .status.success {
+
+            display: block;
+
+            color: #9fffc2;
+
+            background:
+                rgba(40,180,90,0.12);
+
+            border:
+                1px solid
+                rgba(40,180,90,0.25);
+
+        }
+
+
+        .status.error {
+
+            display: block;
+
+            color: #ffaaaa;
+
+            background:
+                rgba(180,40,40,0.12);
+
+            border:
+                1px solid
+                rgba(180,40,40,0.25);
+
+        }
+
+
+        .user-info {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #8492a6;
+
+            font-size: 12px;
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .plans {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .payment-page {
+
+                padding: 50px 15px;
+
+            }
+
+
+            .payment-header h1 {
+
+                font-size: 32px;
+
+            }
+
+
+            .plans {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
 
-        <a href="index.html" class="brand">
-            <span class="brand-dot"></span>
-            MacroCraft
+    <main class="payment-page">
+
+
+        <a
+            href="index.html"
+            class="back-button"
+        >
+            ← Back to CxrHFN
         </a>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#features">Features</a>
-            <a href="#compatibility">Compatibility</a>
-        </nav>
 
-        <a href="#buy" class="nav-buy">
-            Buy Now
-        </a>
+        <section class="payment-header">
 
-    </header>
-
-
-    <!-- PRODUCT HERO -->
-    <main>
-
-        <section class="product-hero">
-
-            <!-- LEFT -->
-            <div class="product-visual">
-
-                <div class="visual-glow"></div>
-
-                <div class="big-crystal">
-                    <div class="crystal-inner"></div>
-                </div>
-
-                <div class="floating-text">
-                    CPvP
-                </div>
-
+            <div class="tag">
+                MINECRAFT • PVP
             </div>
 
 
-            <!-- RIGHT -->
-            <div class="product-info">
-
-                <div class="product-tag">
-                    MINECRAFT • CRYSTAL PVP
-                </div>
-
-                <h1>
-                    CPvP
-                    <span>Macro</span>
-                </h1>
-
-                <p class="description">
-                    A powerful and lightweight macro designed
-                    for Minecraft Crystal PvP players.
-                </p>
+            <h1>
+                CPvP Macro
+            </h1>
 
 
-                <div class="rating">
-                    <span>★★★★★</span>
-                    <p>Premium Macro</p>
-                </div>
-
-
-                <div class="price-box">
-
-                    <div>
-                        <span class="price-label">PRICE</span>
-                        <strong>$4.99</strong>
-                    </div>
-
-                    <span class="instant">
-                        INSTANT DOWNLOAD
-                    </span>
-
-                </div>
-
-
-                <div id="buy">
-
-                    <button class="buy-button">
-                        Buy CPvP Macro →
-                    </button>
-
-                </div>
-
-
-                <p class="secure">
-                    🔒 Secure digital purchase • Instant access
-                </p>
-
-            </div>
+            <p>
+                Choose your access duration.
+            </p>
 
         </section>
 
 
-        <!-- FEATURES -->
-        <section class="details" id="features">
 
-            <div class="section-title">
+        <section class="plans">
 
-                <span>FEATURES</span>
+
+            <!-- 1 MONTH -->
+
+            <article class="plan">
 
                 <h2>
-                    Built For CPvP
+                    1 Month
                 </h2>
 
-                <p>
-                    Everything you need for a smooth macro experience.
-                </p>
 
-            </div>
-
-
-            <div class="feature-grid">
-
-                <div class="feature-card">
-
-                    <div class="feature-icon">
-                        ⚡
-                    </div>
-
-                    <h3>Fast</h3>
-
-                    <p>
-                        Designed to perform actions quickly
-                        without unnecessary complexity.
-                    </p>
-
+                <div class="plan-price">
+                    ₹299
                 </div>
 
 
-                <div class="feature-card">
-
-                    <div class="feature-icon">
-                        🎮
-                    </div>
-
-                    <h3>Easy To Use</h3>
-
-                    <p>
-                        Simple setup and straightforward controls.
-                    </p>
-
+                <div class="plan-duration">
+                    30 days access
                 </div>
 
 
-                <div class="feature-card">
+                <button
+                    class="buy-plan"
+                    data-plan="1 Month"
+                    data-price="29900"
+                    data-days="30"
+                >
+                    Buy Now
+                </button>
 
-                    <div class="feature-icon">
-                        ⚙️
-                    </div>
-
-                    <h3>Customizable</h3>
-
-                    <p>
-                        Configure the macro according to
-                        your preferred setup.
-                    </p>
-
-                </div>
+            </article>
 
 
-                <div class="feature-card">
 
-                    <div class="feature-icon">
-                        🔄
-                    </div>
+            <!-- 3 MONTHS -->
 
-                    <h3>Updates</h3>
-
-                    <p>
-                        Future updates can keep the macro
-                        compatible with supported versions.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- COMPATIBILITY -->
-        <section class="compatibility" id="compatibility">
-
-            <div class="section-title">
-
-                <span>COMPATIBILITY</span>
+            <article class="plan">
 
                 <h2>
-                    Before You Buy
+                    3 Months
                 </h2>
 
-            </div>
 
-
-            <div class="compatibility-box">
-
-                <div>
-                    <small>MINECRAFT VERSION</small>
-                    <strong>Coming Soon</strong>
+                <div class="plan-price">
+                    ₹599
                 </div>
 
-                <div>
-                    <small>SUPPORTED CLIENT</small>
-                    <strong>Coming Soon</strong>
+
+                <div class="plan-duration">
+                    90 days access
                 </div>
 
-                <div>
-                    <small>OPERATING SYSTEM</small>
-                    <strong>Windows</strong>
+
+                <button
+                    class="buy-plan"
+                    data-plan="3 Months"
+                    data-price="59900"
+                    data-days="90"
+                >
+                    Buy Now
+                </button>
+
+            </article>
+
+
+
+            <!-- 6 MONTHS -->
+
+            <article class="plan popular">
+
+                <div class="popular-label">
+                    POPULAR
                 </div>
 
-            </div>
-
-        </section>
-
-
-        <!-- FINAL CTA -->
-        <section class="final-cta">
-
-            <div>
-
-                <span>
-                    READY?
-                </span>
 
                 <h2>
-                    Get the CPvP Macro.
+                    6 Months
                 </h2>
 
-                <p>
-                    Purchase once and get instant access.
-                </p>
 
-            </div>
+                <div class="plan-price">
+                    ₹799
+                </div>
 
-            <button class="buy-button">
-                Buy Now — $4.99
-            </button>
+
+                <div class="plan-duration">
+                    180 days access
+                </div>
+
+
+                <button
+                    class="buy-plan"
+                    data-plan="6 Months"
+                    data-price="79900"
+                    data-days="180"
+                >
+                    Buy Now
+                </button>
+
+            </article>
+
+
+
+            <!-- 12 MONTHS -->
+
+            <article class="plan">
+
+                <h2>
+                    12 Months
+                </h2>
+
+
+                <div class="plan-price">
+                    ₹999
+                </div>
+
+
+                <div class="plan-duration">
+                    365 days access
+                </div>
+
+
+                <button
+                    class="buy-plan"
+                    data-plan="12 Months"
+                    data-price="99900"
+                    data-days="365"
+                >
+                    Buy Now
+                </button>
+
+            </article>
+
 
         </section>
+
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+
+        <div
+            id="userInfo"
+            class="user-info"
+        ></div>
+
 
     </main>
 
 
-    <!-- FOOTER -->
-    <footer>
 
-        <div class="footer-brand">
-            MacroCraft
-        </div>
+    <script>
 
-        <p>
-            Minecraft macros made simple.
-        </p>
 
-        <span>
-            © 2026 MacroCraft
-        </span>
+        /* =====================================
+           SUPABASE
+        ===================================== */
 
-    </footer>
+
+        const SUPABASE_URL =
+            "https://bcrewixxvendicfxbfpb.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_u6Hkn8hGCiAue-llQ9pJLA_ZHbwcmas";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+
+        /* =====================================
+           RAZORPAY
+        ===================================== */
+
+
+        const RAZORPAY_KEY =
+            "rzp_test_TRgmhyA13yVtk3";
+
+
+
+        /* =====================================
+           EDGE FUNCTION
+        ===================================== */
+
+
+        const VERIFY_FUNCTION =
+            "verify-payment";
+
+
+
+        /* =====================================
+           ELEMENTS
+        ===================================== */
+
+
+        const buttons =
+            document.querySelectorAll(
+                ".buy-plan"
+            );
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        const userInfo =
+            document.getElementById(
+                "userInfo"
+            );
+
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+
+        function showStatus(
+            message,
+            type
+        ) {
+
+            status.textContent =
+                message;
+
+            status.className =
+                "status " + type;
+
+        }
+
+
+
+        /* =====================================
+           GET CURRENT USER
+        ===================================== */
+
+
+        async function getCurrentUser() {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getUser();
+
+
+            if (error) {
+
+                console.error(
+                    error
+                );
+
+                return null;
+
+            }
+
+
+            return data.user;
+
+        }
+
+
+
+        /* =====================================
+           SHOW USER
+        ===================================== */
+
+
+        async function loadUser() {
+
+            const user =
+                await getCurrentUser();
+
+
+            if (!user) {
+
+                userInfo.textContent =
+                    "Please login before purchasing.";
+
+                return;
+
+            }
+
+
+            userInfo.textContent =
+                "Logged in as " +
+                user.email;
+
+        }
+
+
+        loadUser();
+
+
+
+        /* =====================================
+           CREATE ORDER
+        ===================================== */
+
+
+        async function createOrder(
+            plan
+        ) {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.functions.invoke(
+                    VERIFY_FUNCTION,
+                    {
+                        body: {
+                            action:
+                                "create_order",
+
+                            plan:
+                                plan
+                        }
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Create order error:",
+                    error
+                );
+
+                throw new Error(
+                    "Could not create payment order."
+                );
+
+            }
+
+
+            if (
+                !data ||
+                !data.success
+            ) {
+
+                console.error(
+                    "Order response:",
+                    data
+                );
+
+                throw new Error(
+                    data?.error ||
+                    "Could not create payment order."
+                );
+
+            }
+
+
+            return data;
+
+        }
+
+
+
+        /* =====================================
+           VERIFY PAYMENT
+        ===================================== */
+
+
+        async function verifyPayment(
+            response,
+            plan
+        ) {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.functions.invoke(
+                    VERIFY_FUNCTION,
+                    {
+                        body: {
+
+                            action:
+                                "verify_payment",
+
+                            razorpay_order_id:
+                                response.razorpay_order_id,
+
+                            razorpay_payment_id:
+                                response.razorpay_payment_id,
+
+                            razorpay_signature:
+                                response.razorpay_signature,
+
+                            plan:
+                                plan
+
+                        }
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Verification error:",
+                    error
+                );
+
+                throw new Error(
+                    "Payment verification request failed."
+                );
+
+            }
+
+
+            if (
+                !data ||
+                !data.success
+            ) {
+
+                console.error(
+                    "Verification response:",
+                    data
+                );
+
+                throw new Error(
+                    data?.error ||
+                    "Payment verification failed."
+                );
+
+            }
+
+
+            return data;
+
+        }
+
+
+
+        /* =====================================
+           PAYMENT
+        ===================================== */
+
+
+        buttons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+
+                        const user =
+                            await getCurrentUser();
+
+
+                        /* -------------------------
+                           LOGIN CHECK
+                        ------------------------- */
+
+
+                        if (!user) {
+
+                            showStatus(
+                                "Please login first, then purchase your plan.",
+                                "error"
+                            );
+
+
+                            setTimeout(
+                                () => {
+
+                                    window.location.href =
+                                        "login.html?redirect=cpvp.html";
+
+                                },
+                                1200
+                            );
+
+
+                            return;
+
+                        }
+
+
+
+                        const plan =
+                            button.dataset.plan;
+
+
+                        const price =
+                            Number(
+                                button.dataset.price
+                            );
+
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Creating Order...";
+
+
+                        try {
+
+
+                            /* -------------------------
+                               CREATE SECURE ORDER
+                            ------------------------- */
+
+
+                            const order =
+                                await createOrder(
+                                    plan
+                                );
+
+
+                            button.textContent =
+                                "Opening...";
+
+
+
+                            /* -------------------------
+                               RAZORPAY OPTIONS
+                            ------------------------- */
+
+
+                            const options = {
+
+                                key:
+                                    RAZORPAY_KEY,
+
+
+                                amount:
+                                    order.amount,
+
+
+                                currency:
+                                    order.currency,
+
+
+                                order_id:
+                                    order.order_id,
+
+
+                                name:
+                                    "CxrHFN",
+
+
+                                description:
+                                    "CPvP Macro - " +
+                                    plan,
+
+
+                                prefill: {
+
+                                    email:
+                                        user.email
+
+                                },
+
+
+                                theme: {
+
+                                    color:
+                                        "#3e9df5"
+
+                                },
+
+
+                                handler:
+                                    async function (
+                                        response
+                                    ) {
+
+
+                                        console.log(
+                                            "Razorpay response:",
+                                            response
+                                        );
+
+
+                                        showStatus(
+                                            "Payment received. Verifying payment...",
+                                            "success"
+                                        );
+
+
+                                        try {
+
+
+                                            /* -------------------------
+                                               SERVER VERIFICATION
+                                            ------------------------- */
+
+
+                                            const result =
+                                                await verifyPayment(
+                                                    response,
+                                                    plan
+                                                );
+
+
+                                            console.log(
+                                                "Verified purchase:",
+                                                result
+                                            );
+
+
+                                            showStatus(
+                                                "✅ Payment verified! Your CPvP Macro purchase is active.",
+                                                "success"
+                                            );
+
+
+                                            button.textContent =
+                                                "Payment Verified";
+
+
+                                            button.disabled =
+                                                true;
+
+
+                                            /*
+                                             * Dashboard par bhejo
+                                             * after successful verification
+                                             */
+
+
+                                            setTimeout(
+                                                () => {
+
+                                                    window.location.href =
+                                                        "dashboard.html";
+
+                                                },
+                                                1500
+                                            );
+
+
+                                        } catch (
+                                            verificationError
+                                        ) {
+
+
+                                            console.error(
+                                                verificationError
+                                            );
+
+
+                                            showStatus(
+                                                verificationError.message ||
+                                                "Payment verification failed.",
+                                                "error"
+                                            );
+
+
+                                            button.disabled =
+                                                false;
+
+
+                                            button.textContent =
+                                                "Buy Now";
+
+                                        }
+
+                                    },
+
+
+                                modal: {
+
+                                    ondismiss:
+                                        function () {
+
+                                            button.disabled =
+                                                false;
+
+                                            button.textContent =
+                                                "Buy Now";
+
+                                        }
+
+                                }
+
+                            };
+
+
+
+                            /* -------------------------
+                               OPEN RAZORPAY
+                            ------------------------- */
+
+
+                            const razorpay =
+                                new Razorpay(
+                                    options
+                                );
+
+
+                            razorpay.on(
+                                "payment.failed",
+                                function (
+                                    response
+                                ) {
+
+
+                                    console.error(
+                                        "Payment failed:",
+                                        response
+                                    );
+
+
+                                    showStatus(
+                                        "Payment failed. Please try again.",
+                                        "error"
+                                    );
+
+
+                                    button.disabled =
+                                        false;
+
+
+                                    button.textContent =
+                                        "Buy Now";
+
+                                }
+                            );
+
+
+                            razorpay.open();
+
+
+                        } catch (
+                            error
+                        ) {
+
+
+                            console.error(
+                                error
+                            );
+
+
+                            showStatus(
+                                error.message ||
+                                "Unable to start payment.",
+                                "error"
+                            );
+
+
+                            button.disabled =
+                                false;
+
+
+                            button.textContent =
+                                "Buy Now";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    </script>
 
 
 </body>
+
 </html>
+```
