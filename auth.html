@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MacroCraft — Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 50% 35%,
+                    rgba(35, 130, 255, 0.18),
+                    transparent 35%
+                ),
+                #050914;
+        }
+
+        .auth-box {
+            width: min(420px, 90%);
+
+            padding: 35px;
+
+            background: rgba(10, 16, 29, 0.92);
+
+            border: 1px solid rgba(76, 174, 255, 0.2);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand {
+            text-align: center;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .brand span {
+            color: #4caeff;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #748198;
+
+            font-size: 13px;
+
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+
+            margin-bottom: 25px;
+
+            background: #070d19;
+
+            border-radius: 9px;
+
+            padding: 4px;
+        }
+
+        .tab {
+            width: 50%;
+
+            padding: 10px;
+
+            border: none;
+
+            background: transparent;
+
+            color: #718097;
+
+            cursor: pointer;
+
+            border-radius: 7px;
+
+            font-weight: 700;
+        }
+
+        .tab.active {
+            background: #3e9df5;
+
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+
+            color: #9ba7bb;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid rgba(80, 110, 150, 0.25);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background: #070d19;
+
+            color: white;
+
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #3e9df5;
+        }
+
+        .submit-button {
+            width: 100%;
+
+            margin-top: 5px;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #3e9df5;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #55acff;
+        }
+
+        .message {
+            min-height: 20px;
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: #7d899e;
+
+            font-size: 12px;
+        }
+
+        .back {
+            display: block;
+
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #607088;
+
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+
+        .back:hover {
+            color: #4caeff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-box">
+
+        <div class="brand">
+            Macro<span>Craft</span>
+        </div>
+
+        <div class="subtitle">
+            Minecraft Macros
+        </div>
+
+
+        <div class="tabs">
+
+            <button
+                id="loginTab"
+                class="tab active"
+                onclick="showLogin()">
+                Login
+            </button>
+
+            <button
+                id="signupTab"
+                class="tab"
+                onclick="showSignup()">
+                Sign Up
+            </button>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-button">
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- SIGN UP -->
+
+        <form
+            id="signupForm"
+            style="display: none;">
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-button">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <a
+            href="index.html"
+            class="back">
+            ← Back to MacroCraft
+        </a>
+
+    </div>
+
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="auth.js"></script>
+
+</body>
+
+</html>

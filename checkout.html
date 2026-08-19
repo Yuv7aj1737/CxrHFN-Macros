@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CxrHFN — Checkout</title>
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background: #050914;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px;
+
+        }
+
+
+        .checkout-container {
+
+            width: 100%;
+
+            max-width: 520px;
+
+        }
+
+
+        .brand {
+
+            text-align: center;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .brand span {
+
+            color: #4caeff;
+
+        }
+
+
+        .checkout-card {
+
+            background: #0a101d;
+
+            border:
+                1px solid
+                rgba(75, 110, 155, 0.2);
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.3);
+
+        }
+
+
+        .tag {
+
+            color: #4caeff;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        h1 {
+
+            font-size: 30px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .info {
+
+            padding: 18px;
+
+            background: #070d19;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .row {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid
+                rgba(100, 130, 170, 0.1);
+
+        }
+
+
+        .row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .label {
+
+            color: #77869d;
+
+            font-size: 13px;
+
+        }
+
+
+        .value {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            text-align: right;
+
+        }
+
+
+        .total {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .total-label {
+
+            color: #8b96aa;
+
+            font-size: 14px;
+
+        }
+
+
+        .total-price {
+
+            color: #57b3ff;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+        }
+
+
+        .payment-button {
+
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #3e9df5;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .payment-button:hover {
+
+            background: #55acff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .payment-button:disabled {
+
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #718097;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+        }
+
+
+        .back:hover {
+
+            color: white;
+
+        }
+
+
+        .message {
+
+            display: none;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-top: 15px;
+
+            font-size: 13px;
+
+            text-align: center;
+
+        }
+
+
+        .error {
+
+            display: block;
+
+            color: #ff9a9a;
+
+            background:
+                rgba(150, 30, 30, 0.15);
+
+            border:
+                1px solid
+                rgba(255, 100, 100, 0.2);
+
+        }
+
+
+        .login-message {
+
+            text-align: center;
+
+            color: #8b96aa;
+
+            line-height: 1.6;
+
+        }
+
+
+        .login-link {
+
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            background: #3e9df5;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="checkout-container">
+
+
+        <div class="brand">
+
+            <span>CxrHFN</span>
+
+            Checkout
+
+        </div>
+
+
+        <div
+            class="checkout-card"
+            id="checkoutCard"
+        >
+
+            <div class="tag">
+                MINECRAFT • PVP
+            </div>
+
+
+            <h1>
+                Complete Your Order
+            </h1>
+
+
+            <div class="info">
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Product
+                    </div>
+
+                    <div
+                        class="value"
+                        id="productName"
+                    >
+                        CPvP Macro
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Plan
+                    </div>
+
+                    <div
+                        class="value"
+                        id="planName"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Account Email
+                    </div>
+
+                    <div
+                        class="value"
+                        id="userEmail"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="total">
+
+                <div class="total-label">
+                    Total
+                </div>
+
+                <div
+                    class="total-price"
+                    id="totalPrice"
+                >
+                    ₹0
+                </div>
+
+            </div>
+
+
+            <button
+                class="payment-button"
+                id="paymentButton"
+            >
+                Continue to Payment
+            </button>
+
+
+            <div
+                id="errorMessage"
+                class="message"
+            ></div>
+
+
+            <a
+                href="cpvp.html"
+                class="back"
+            >
+                ← Change Plan
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+
+        /* =========================
+           SUPABASE CONFIG
+        ========================= */
+
+
+        const SUPABASE_URL =
+            "https://bcrewixxvendicfxbfpb.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_u6Hkn8hGCiAue-llQ9pJLA_ZHbwcmas";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+
+        const productName =
+            document.getElementById(
+                "productName"
+            );
+
+
+        const planName =
+            document.getElementById(
+                "planName"
+            );
+
+
+        const userEmail =
+            document.getElementById(
+                "userEmail"
+            );
+
+
+        const totalPrice =
+            document.getElementById(
+                "totalPrice"
+            );
+
+
+        const paymentButton =
+            document.getElementById(
+                "paymentButton"
+            );
+
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        /* =========================
+           CHECKOUT
+        ========================= */
+
+
+        async function loadCheckout() {
+
+
+            /* GET LOGIN SESSION */
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                showError(
+                    "Unable to check your account."
+                );
+
+                return;
+
+            }
+
+
+            const session =
+                data.session;
+
+
+            /* USER NOT LOGGED IN */
+
+            if (!session) {
+
+                document.getElementById(
+                    "checkoutCard"
+                ).innerHTML = `
+
+                    <div class="tag">
+                        ACCOUNT REQUIRED
+                    </div>
+
+                    <h1>
+                        Please Login
+                    </h1>
+
+                    <div class="login-message">
+
+                        You need to be logged in
+                        before purchasing a macro.
+
+                        <br>
+
+                        <a
+                            href="login.html"
+                            class="login-link"
+                        >
+                            Login to Continue
+                        </a>
+
+                    </div>
+
+                    <a
+                        href="cpvp.html"
+                        class="back"
+                    >
+                        ← Back to CPvP Macro
+                    </a>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* GET SELECTED PLAN */
+
+            const selectedPlan =
+                localStorage.getItem(
+                    "selectedPlan"
+                );
+
+
+            const selectedPrice =
+                localStorage.getItem(
+                    "selectedPrice"
+                );
+
+
+            const selectedMacro =
+                localStorage.getItem(
+                    "selectedMacro"
+                );
+
+
+            /* CHECK PLAN */
+
+            if (
+                !selectedPlan ||
+                !selectedPrice
+            ) {
+
+                showError(
+                    "No plan selected. Please go back and select a plan."
+                );
+
+                paymentButton.disabled =
+                    true;
+
+                return;
+
+            }
+
+
+            /* SHOW DATA */
+
+            productName.textContent =
+                selectedMacro ||
+                "CPvP Macro";
+
+
+            planName.textContent =
+                selectedPlan;
+
+
+            userEmail.textContent =
+                session.user.email;
+
+
+            totalPrice.textContent =
+                "₹" +
+                selectedPrice;
+
+
+        }
+
+
+        /* =========================
+           PAYMENT BUTTON
+        ========================= */
+
+
+        paymentButton.addEventListener(
+            "click",
+            async () => {
+
+
+                const {
+                    data
+                } =
+                    await supabaseClient.auth.getSession();
+
+
+                if (!data.session) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const selectedPlan =
+                    localStorage.getItem(
+                        "selectedPlan"
+                    );
+
+
+                const selectedPrice =
+                    localStorage.getItem(
+                        "selectedPrice"
+                    );
+
+
+                if (
+                    !selectedPlan ||
+                    !selectedPrice
+                ) {
+
+                    showError(
+                        "Please select a plan first."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                   PAYMENT GATEWAY WILL
+                   BE CONNECTED HERE.
+                */
+
+                alert(
+                    "Payment system will be connected in the next step."
+                );
+
+            }
+        );
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+
+        function showError(message) {
+
+            errorMessage.textContent =
+                message;
+
+            errorMessage.className =
+                "message error";
+
+        }
+
+
+        /* =========================
+           START
+        ========================= */
+
+
+        loadCheckout();
+
+    </script>
+
+
+</body>
+
+</html>
