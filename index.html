@@ -1,6 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,12 +13,243 @@
 
     <title>CxrHFN — Minecraft Macros</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
     <style>
+
+        /* =========================
+           CIRCULAR LOGO
+        ========================= */
+
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+
+            border:
+                2px solid
+                rgba(76, 174, 255, 0.35);
+
+            box-shadow:
+                0 0 12px
+                rgba(76, 174, 255, 0.35);
+
+            transition: 0.25s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.08);
+
+            box-shadow:
+                0 0 20px
+                rgba(76, 174, 255, 0.55);
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        /* =========================
+           COUNTRY / CURRENCY
+        ========================= */
+
+        .country-wrapper {
+            position: relative;
+        }
+
+        .country-button {
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 0 11px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                rgba(90, 120, 160, 0.25);
+
+            background:
+                rgba(10, 16, 29, 0.75);
+
+            color: #dce7f5;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .country-button:hover {
+            border-color:
+                rgba(76, 174, 255, 0.5);
+
+            background:
+                rgba(20, 30, 50, 0.9);
+        }
+
+        .country-flag {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .country-arrow {
+            font-size: 10px;
+            color: #8492a6;
+        }
+
+
+        .country-menu {
+            position: absolute;
+
+            top: calc(100% + 9px);
+            right: 0;
+
+            width: 280px;
+
+            padding: 10px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(90, 120, 160, 0.25);
+
+            background:
+                rgba(8, 13, 24, 0.98);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.45);
+
+            backdrop-filter: blur(15px);
+
+            z-index: 1000;
+
+            display: none;
+        }
+
+        .country-menu.open {
+            display: block;
+        }
+
+
+        .country-search {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 10px 12px;
+
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            border:
+                1px solid
+                rgba(90, 120, 160, 0.25);
+
+            background:
+                rgba(20, 29, 45, 0.8);
+
+            color: white;
+
+            font-size: 12px;
+        }
+
+        .country-search::placeholder {
+            color: #6f7d91;
+        }
+
+
+        .country-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+
+        .country-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 9px 10px;
+
+            border: 0;
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: #cbd6e5;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-size: 12px;
+        }
+
+        .country-item:hover {
+            background:
+                rgba(62, 157, 245, 0.12);
+
+            color: white;
+        }
+
+        .country-item-flag {
+            width: 25px;
+            font-size: 18px;
+        }
+
+        .country-item-name {
+            flex: 1;
+        }
+
+        .country-item-currency {
+            color: #718096;
+            font-size: 10px;
+        }
+
+
         /* =========================
            AUTH BUTTONS
         ========================= */
@@ -28,23 +262,36 @@
 
         .auth-button {
             padding: 9px 15px;
+
             border-radius: 8px;
+
             text-decoration: none;
+
             font-size: 12px;
+
             font-weight: 700;
+
             transition: 0.2s;
+
             cursor: pointer;
         }
 
         .login-button {
             color: #9aa8bd;
-            border: 1px solid rgba(90, 120, 160, 0.25);
-            background: rgba(10, 16, 29, 0.6);
+
+            border:
+                1px solid
+                rgba(90, 120, 160, 0.25);
+
+            background:
+                rgba(10, 16, 29, 0.6);
         }
 
         .login-button:hover {
             color: white;
-            border-color: rgba(76, 174, 255, 0.4);
+
+            border-color:
+                rgba(76, 174, 255, 0.4);
         }
 
         .signup-button,
@@ -61,49 +308,65 @@
 
         .logout-button {
             color: #ff9a9a;
-            border: 1px solid rgba(255, 100, 100, 0.2);
-            background: rgba(100, 20, 20, 0.15);
+
+            border:
+                1px solid
+                rgba(255, 100, 100, 0.2);
+
+            background:
+                rgba(100, 20, 20, 0.15);
         }
 
         .logout-button:hover {
             color: white;
-            background: rgba(180, 40, 40, 0.25);
+
+            background:
+                rgba(180, 40, 40, 0.25);
         }
 
+
         /* =========================
-           PRODUCT IMAGE AREA
+           PRODUCT IMAGE
         ========================= */
 
         .product-image {
             position: relative;
+
             min-height: 230px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             overflow: hidden;
         }
-
-        /* =========================
-           MACRO IMAGES
-        ========================= */
 
         .macro-image {
             width: 145px;
             height: 145px;
+
             object-fit: contain;
+
             display: block;
+
             position: relative;
+
             z-index: 2;
 
             filter:
                 drop-shadow(
-                    0 0 10px rgba(70, 170, 255, 0.9)
+                    0 0 10px
+                    rgba(70, 170, 255, 0.9)
                 )
                 drop-shadow(
-                    0 0 25px rgba(70, 170, 255, 0.65)
+                    0 0 25px
+                    rgba(70, 170, 255, 0.65)
                 )
                 drop-shadow(
-                    0 0 45px rgba(70, 170, 255, 0.35)
+                    0 0 45px
+                    rgba(70, 170, 255, 0.35)
                 );
 
             animation:
@@ -113,57 +376,56 @@
                 infinite;
         }
 
+
         @keyframes macroFloat {
+
             0%,
             100% {
-                transform: translateY(0) rotate(0deg);
+                transform:
+                    translateY(0)
+                    rotate(0deg);
             }
 
             50% {
-                transform: translateY(-10px) rotate(3deg);
+                transform:
+                    translateY(-10px)
+                    rotate(3deg);
             }
+
         }
 
-        /* =========================
-           IMAGE FALLBACK
-        ========================= */
-
-        .image-fallback {
-            width: 145px;
-            height: 145px;
-            border-radius: 16px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #7f91aa;
-            background: rgba(30, 45, 65, 0.35);
-            border: 1px solid rgba(90, 120, 160, 0.2);
-            font-size: 12px;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        /* =========================
-           AVAILABLE LABEL
-        ========================= */
 
         .available-label {
             position: absolute;
+
             bottom: 12px;
             left: 50%;
-            transform: translateX(-50%);
+
+            transform:
+                translateX(-50%);
+
             z-index: 5;
+
             white-space: nowrap;
         }
+
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 600px) {
-            .nav-actions {
+        @media (max-width: 700px) {
+
+            .navbar-right {
                 gap: 5px;
+            }
+
+            .country-button {
+                padding: 0 8px;
+            }
+
+            .country-button-name {
+                display: none;
             }
 
             .auth-button {
@@ -171,16 +433,40 @@
                 font-size: 11px;
             }
 
-            .macro-image,
-            .image-fallback {
+            .brand-logo {
+                width: 38px;
+                height: 38px;
+            }
+
+            .macro-image {
                 width: 120px;
                 height: 120px;
             }
+
         }
+
+
+        @media (max-width: 500px) {
+
+            .country-menu {
+                position: fixed;
+
+                top: 65px;
+                right: 10px;
+                left: 10px;
+
+                width: auto;
+            }
+
+        }
+
     </style>
+
 </head>
 
+
 <body>
+
 
     <!-- =========================
          NAVBAR
@@ -188,52 +474,126 @@
 
     <header class="navbar">
 
+
+        <!-- LOGO -->
+
         <div class="brand">
-            <span class="brand-dot"></span>
-            CxrHFN
+
+            <img
+                src="images/logo.png"
+                alt="CxrHFN Logo"
+                class="brand-logo"
+            >
+
         </div>
 
-        <!-- LOGGED OUT -->
 
-        <div
-            class="nav-actions"
-            id="loggedOutButtons"
-        >
-            <a
-                href="login.html"
-                class="auth-button login-button"
+        <div class="navbar-right">
+
+
+            <!-- COUNTRY SELECTOR -->
+
+            <div class="country-wrapper">
+
+                <button
+                    class="country-button"
+                    id="countryButton"
+                    type="button"
+                >
+
+                    <span
+                        class="country-flag"
+                        id="selectedFlag"
+                    >
+                        🇮🇳
+                    </span>
+
+                    <span
+                        class="country-button-name"
+                        id="selectedCountry"
+                    >
+                        India
+                    </span>
+
+                    <span class="country-arrow">
+                        ▼
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="country-menu"
+                    id="countryMenu"
+                >
+
+                    <input
+                        type="text"
+                        id="countrySearch"
+                        class="country-search"
+                        placeholder="Search country..."
+                        autocomplete="off"
+                    >
+
+
+                    <div
+                        class="country-list"
+                        id="countryList"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGGED OUT -->
+
+            <div
+                class="nav-actions"
+                id="loggedOutButtons"
             >
-                Login
-            </a>
 
-            <a
-                href="signup.html"
-                class="auth-button signup-button"
+                <a
+                    href="login.html"
+                    class="auth-button login-button"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="signup.html"
+                    class="auth-button signup-button"
+                >
+                    Sign Up
+                </a>
+
+            </div>
+
+
+            <!-- LOGGED IN -->
+
+            <div
+                class="nav-actions"
+                id="loggedInButtons"
+                style="display: none;"
             >
-                Sign Up
-            </a>
-        </div>
 
-        <!-- LOGGED IN -->
+                <a
+                    href="dashboard.html"
+                    class="auth-button dashboard-button"
+                >
+                    Dashboard
+                </a>
 
-        <div
-            class="nav-actions"
-            id="loggedInButtons"
-            style="display: none;"
-        >
-            <a
-                href="dashboard.html"
-                class="auth-button dashboard-button"
-            >
-                Dashboard
-            </a>
+                <button
+                    id="logoutButton"
+                    class="auth-button logout-button"
+                >
+                    Logout
+                </button>
 
-            <button
-                id="logoutButton"
-                class="auth-button logout-button"
-            >
-                Logout
-            </button>
+            </div>
+
         </div>
 
     </header>
@@ -279,6 +639,7 @@
 
     <main id="store">
 
+
         <div class="section-heading">
 
             <span>
@@ -299,9 +660,7 @@
         <div class="products">
 
 
-            <!-- =========================
-                 CPVP MACRO
-            ========================= -->
+            <!-- CPVP -->
 
             <article class="product-card available">
 
@@ -311,12 +670,7 @@
                         src="images/end-crystal.png"
                         alt="CPvP Macro"
                         class="macro-image"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     >
-
-                    <div class="image-fallback">
-                        CPvP image not found
-                    </div>
 
                     <div class="available-label">
                         ● AVAILABLE
@@ -340,9 +694,13 @@
                         crystal PvP gameplay.
                     </p>
 
+
                     <div class="product-bottom">
 
-                        <div class="price">
+                        <div
+                            class="price"
+                            data-inr="299"
+                        >
                             ₹299
                         </div>
 
@@ -360,9 +718,7 @@
             </article>
 
 
-            <!-- =========================
-                 SWORD MACRO
-            ========================= -->
+            <!-- SWORD -->
 
             <article class="product-card coming-soon">
 
@@ -372,12 +728,7 @@
                         src="images/sword.png"
                         alt="Sword Macro"
                         class="macro-image"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     >
-
-                    <div class="image-fallback">
-                        Sword image not found
-                    </div>
 
                 </div>
 
@@ -409,9 +760,7 @@
             </article>
 
 
-            <!-- =========================
-                 MACE MACRO
-            ========================= -->
+            <!-- MACE -->
 
             <article class="product-card coming-soon">
 
@@ -421,12 +770,7 @@
                         src="images/mace.png"
                         alt="Mace Macro"
                         class="macro-image"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     >
-
-                    <div class="image-fallback">
-                        Mace image not found
-                    </div>
 
                 </div>
 
@@ -458,9 +802,7 @@
             </article>
 
 
-            <!-- =========================
-                 UHC MACRO
-            ========================= -->
+            <!-- UHC -->
 
             <article class="product-card coming-soon">
 
@@ -470,12 +812,7 @@
                         src="images/uhc.png"
                         alt="UHC Macro"
                         class="macro-image"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     >
-
-                    <div class="image-fallback">
-                        UHC image not found
-                    </div>
 
                 </div>
 
@@ -507,9 +844,7 @@
             </article>
 
 
-            <!-- =========================
-                 ALL IN ONE
-            ========================= -->
+            <!-- ALL IN ONE -->
 
             <article
                 class="product-card coming-soon all-in-one"
@@ -550,6 +885,7 @@
 
             </article>
 
+
         </div>
 
     </main>
@@ -577,10 +913,14 @@
 
 
     <!-- =========================
-         SUPABASE AUTH
+         JAVASCRIPT
     ========================= -->
 
     <script>
+
+        /* =========================
+           SUPABASE
+        ========================= */
 
         const SUPABASE_URL =
             "https://bcrewixxvendicfxbfpb.supabase.co";
@@ -594,6 +934,10 @@
                 SUPABASE_KEY
             );
 
+
+        /* =========================
+           AUTH
+        ========================= */
 
         const loggedOutButtons =
             document.getElementById(
@@ -621,8 +965,11 @@
 
 
             if (error) {
+
                 console.error(error);
+
                 return;
+
             }
 
 
@@ -662,10 +1009,12 @@
 
 
                 if (error) {
-                    console.error(error);
-                    return;
-                }
 
+                    console.error(error);
+
+                    return;
+
+                }
 
                 updateNavbar();
 
@@ -675,14 +1024,408 @@
 
         supabaseClient.auth.onAuthStateChange(
             () => {
+
                 updateNavbar();
+
             }
         );
 
 
         updateNavbar();
 
+
+        /* =========================
+           COUNTRY / CURRENCY DATA
+        ========================= */
+
+        const countries = [
+
+            { name: "India", flag: "🇮🇳", currency: "INR", symbol: "₹", rate: 1 },
+
+            { name: "United States", flag: "🇺🇸", currency: "USD", symbol: "$", rate: 0.0117 },
+
+            { name: "United Kingdom", flag: "🇬🇧", currency: "GBP", symbol: "£", rate: 0.0087 },
+
+            { name: "Canada", flag: "🇨🇦", currency: "CAD", symbol: "C$", rate: 0.016 },
+
+            { name: "Australia", flag: "🇦🇺", currency: "AUD", symbol: "A$", rate: 0.018 },
+
+            { name: "Germany", flag: "🇩🇪", currency: "EUR", symbol: "€", rate: 0.010 },
+
+            { name: "France", flag: "🇫🇷", currency: "EUR", symbol: "€", rate: 0.010 },
+
+            { name: "Italy", flag: "🇮🇹", currency: "EUR", symbol: "€", rate: 0.010 },
+
+            { name: "Spain", flag: "🇪🇸", currency: "EUR", symbol: "€", rate: 0.010 },
+
+            { name: "Netherlands", flag: "🇳🇱", currency: "EUR", symbol: "€", rate: 0.010 },
+
+            { name: "Japan", flag: "🇯🇵", currency: "JPY", symbol: "¥", rate: 1.70 },
+
+            { name: "China", flag: "🇨🇳", currency: "CNY", symbol: "¥", rate: 0.084 },
+
+            { name: "South Korea", flag: "🇰🇷", currency: "KRW", symbol: "₩", rate: 16.3 },
+
+            { name: "Singapore", flag: "🇸🇬", currency: "SGD", symbol: "S$", rate: 0.015 },
+
+            { name: "United Arab Emirates", flag: "🇦🇪", currency: "AED", symbol: "د.إ", rate: 0.043 },
+
+            { name: "Saudi Arabia", flag: "🇸🇦", currency: "SAR", symbol: "﷼", rate: 0.044 },
+
+            { name: "New Zealand", flag: "🇳🇿", currency: "NZD", symbol: "NZ$", rate: 0.020 },
+
+            { name: "Switzerland", flag: "🇨🇭", currency: "CHF", symbol: "CHF", rate: 0.0092 },
+
+            { name: "South Africa", flag: "🇿🇦", currency: "ZAR", symbol: "R", rate: 0.21 },
+
+            { name: "Brazil", flag: "🇧🇷", currency: "BRL", symbol: "R$", rate: 0.064 },
+
+            { name: "Mexico", flag: "🇲🇽", currency: "MXN", symbol: "MX$", rate: 0.20 },
+
+            { name: "Turkey", flag: "🇹🇷", currency: "TRY", symbol: "₺", rate: 0.47 },
+
+            { name: "Thailand", flag: "🇹🇭", currency: "THB", symbol: "฿", rate: 0.38 },
+
+            { name: "Malaysia", flag: "🇲🇾", currency: "MYR", symbol: "RM", rate: 0.050 },
+
+            { name: "Indonesia", flag: "🇮🇩", currency: "IDR", symbol: "Rp", rate: 189 },
+
+            { name: "Philippines", flag: "🇵🇭", currency: "PHP", symbol: "₱", rate: 0.66 },
+
+            { name: "Vietnam", flag: "🇻🇳", currency: "VND", symbol: "₫", rate: 294 },
+
+            { name: "Pakistan", flag: "🇵🇰", currency: "PKR", symbol: "Rs", rate: 3.27 },
+
+            { name: "Bangladesh", flag: "🇧🇩", currency: "BDT", symbol: "৳", rate: 1.43 },
+
+            { name: "Sri Lanka", flag: "🇱🇰", currency: "LKR", symbol: "Rs", rate: 3.52 },
+
+            { name: "Nepal", flag: "🇳🇵", currency: "NPR", symbol: "Rs", rate: 1.60 },
+
+            { name: "Russia", flag: "🇷🇺", currency: "RUB", symbol: "₽", rate: 0.94 },
+
+            { name: "Ukraine", flag: "🇺🇦", currency: "UAH", symbol: "₴", rate: 0.49 }
+
+        ];
+
+
+        const countryButton =
+            document.getElementById(
+                "countryButton"
+            );
+
+        const countryMenu =
+            document.getElementById(
+                "countryMenu"
+            );
+
+        const countrySearch =
+            document.getElementById(
+                "countrySearch"
+            );
+
+        const countryList =
+            document.getElementById(
+                "countryList"
+            );
+
+        const selectedFlag =
+            document.getElementById(
+                "selectedFlag"
+            );
+
+        const selectedCountry =
+            document.getElementById(
+                "selectedCountry"
+            );
+
+
+        /* =========================
+           RENDER COUNTRIES
+        ========================= */
+
+        function renderCountries(
+            search = ""
+        ) {
+
+            countryList.innerHTML = "";
+
+            const query =
+                search
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtered =
+                countries.filter(
+                    country =>
+                        country.name
+                            .toLowerCase()
+                            .includes(query)
+                        ||
+                        country.currency
+                            .toLowerCase()
+                            .includes(query)
+                );
+
+
+            filtered.forEach(
+                country => {
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+                    button.type =
+                        "button";
+
+                    button.className =
+                        "country-item";
+
+
+                    button.innerHTML = `
+
+                        <span class="country-item-flag">
+                            ${country.flag}
+                        </span>
+
+                        <span class="country-item-name">
+                            ${country.name}
+                        </span>
+
+                        <span class="country-item-currency">
+                            ${country.currency}
+                        </span>
+
+                    `;
+
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            selectCountry(
+                                country
+                            );
+
+                        }
+                    );
+
+
+                    countryList.appendChild(
+                        button
+                    );
+
+                }
+            );
+
+
+            if (!filtered.length) {
+
+                countryList.innerHTML = `
+
+                    <div
+                        style="
+                            padding:15px;
+                            text-align:center;
+                            color:#718096;
+                            font-size:12px;
+                        "
+                    >
+                        No country found
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* =========================
+           SELECT COUNTRY
+        ========================= */
+
+        function selectCountry(
+            country
+        ) {
+
+            selectedFlag.textContent =
+                country.flag;
+
+            selectedCountry.textContent =
+                country.name;
+
+
+            localStorage.setItem(
+                "cxrhfn_country",
+                country.name
+            );
+
+
+            updatePrices(
+                country
+            );
+
+
+            countryMenu.classList.remove(
+                "open"
+            );
+
+        }
+
+
+        /* =========================
+           UPDATE PRICES
+        ========================= */
+
+        function updatePrices(
+            country
+        ) {
+
+            const prices =
+                document.querySelectorAll(
+                    "[data-inr]"
+                );
+
+
+            prices.forEach(
+                priceElement => {
+
+                    const inr =
+                        Number(
+                            priceElement.dataset.inr
+                        );
+
+
+                    let converted =
+                        inr * country.rate;
+
+
+                    if (
+                        country.currency ===
+                        "JPY"
+                        ||
+                        country.currency ===
+                        "KRW"
+                        ||
+                        country.currency ===
+                        "IDR"
+                        ||
+                        country.currency ===
+                        "VND"
+                    ) {
+
+                        converted =
+                            Math.round(
+                                converted
+                            );
+
+                    } else {
+
+                        converted =
+                            converted.toFixed(
+                                2
+                            );
+
+                    }
+
+
+                    priceElement.textContent =
+                        country.symbol +
+                        converted;
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           COUNTRY BUTTON
+        ========================= */
+
+        countryButton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                countryMenu.classList.toggle(
+                    "open"
+                );
+
+                countrySearch.focus();
+
+            }
+        );
+
+
+        countrySearch.addEventListener(
+            "input",
+            () => {
+
+                renderCountries(
+                    countrySearch.value
+                );
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    !event.target.closest(
+                        ".country-wrapper"
+                    )
+                ) {
+
+                    countryMenu.classList.remove(
+                        "open"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           LOAD SAVED COUNTRY
+        ========================= */
+
+        const savedCountry =
+            localStorage.getItem(
+                "cxrhfn_country"
+            );
+
+
+        const initialCountry =
+            countries.find(
+                country =>
+                    country.name ===
+                    savedCountry
+            )
+            ||
+            countries[0];
+
+
+        selectCountry(
+            initialCountry
+        );
+
+
+        renderCountries();
+
+
     </script>
 
+
 </body>
+
 </html>
+```
