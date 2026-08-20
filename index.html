@@ -6,247 +6,79 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CxrHFN — Minecraft Macros</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
     <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
     <style>
-
-        /* =========================
-           CIRCULAR LOGO
-        ========================= */
-
-        .brand {
-            display: flex;
-            align-items: center;
-        }
-
-        .brand-logo {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-
-            border:
-                2px solid
-                rgba(76, 174, 255, 0.35);
-
-            box-shadow:
-                0 0 12px
-                rgba(76, 174, 255, 0.35);
-
-            transition: 0.25s ease;
-        }
-
-        .brand-logo:hover {
-            transform: scale(1.08);
-
-            box-shadow:
-                0 0 20px
-                rgba(76, 174, 255, 0.55);
-        }
-
 
         /* =========================
            NAVBAR
         ========================= */
 
         .navbar {
+            position: relative;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 50%;
+
+            border: 2px solid rgba(76,174,255,.45);
+
+            box-shadow:
+                0 0 15px rgba(76,174,255,.35),
+                0 0 35px rgba(76,174,255,.12);
+
+            transition: .3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.08) rotate(4deg);
+
+            box-shadow:
+                0 0 20px rgba(76,174,255,.65),
+                0 0 45px rgba(76,174,255,.2);
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #75c4ff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .navbar-right {
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-
-        /* =========================
-           COUNTRY / CURRENCY
-        ========================= */
-
-        .country-wrapper {
-            position: relative;
-        }
-
-        .country-button {
-            height: 38px;
-
-            display: flex;
-            align-items: center;
-            gap: 7px;
-
-            padding: 0 11px;
-
-            border-radius: 8px;
-
-            border:
-                1px solid
-                rgba(90, 120, 160, 0.25);
-
-            background:
-                rgba(10, 16, 29, 0.75);
-
-            color: #dce7f5;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-        .country-button:hover {
-            border-color:
-                rgba(76, 174, 255, 0.5);
-
-            background:
-                rgba(20, 30, 50, 0.9);
-        }
-
-        .country-flag {
-            font-size: 18px;
-            line-height: 1;
-        }
-
-        .country-arrow {
-            font-size: 10px;
-            color: #8492a6;
-        }
-
-
-        .country-menu {
-            position: absolute;
-
-            top: calc(100% + 9px);
-            right: 0;
-
-            width: 280px;
-
-            padding: 10px;
-
-            border-radius: 13px;
-
-            border:
-                1px solid
-                rgba(90, 120, 160, 0.25);
-
-            background:
-                rgba(8, 13, 24, 0.98);
-
-            box-shadow:
-                0 20px 50px
-                rgba(0, 0, 0, 0.45);
-
-            backdrop-filter: blur(15px);
-
-            z-index: 1000;
-
-            display: none;
-        }
-
-        .country-menu.open {
-            display: block;
-        }
-
-
-        .country-search {
-            width: 100%;
-
-            box-sizing: border-box;
-
-            padding: 10px 12px;
-
-            margin-bottom: 8px;
-
-            border-radius: 8px;
-
-            outline: none;
-
-            border:
-                1px solid
-                rgba(90, 120, 160, 0.25);
-
-            background:
-                rgba(20, 29, 45, 0.8);
-
-            color: white;
-
-            font-size: 12px;
-        }
-
-        .country-search::placeholder {
-            color: #6f7d91;
-        }
-
-
-        .country-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-
-        .country-item {
-            width: 100%;
-
-            display: flex;
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 9px 10px;
-
-            border: 0;
-
-            border-radius: 8px;
-
-            background: transparent;
-
-            color: #cbd6e5;
-
-            text-align: left;
-
-            cursor: pointer;
-
-            font-size: 12px;
-        }
-
-        .country-item:hover {
-            background:
-                rgba(62, 157, 245, 0.12);
-
-            color: white;
-        }
-
-        .country-item-flag {
-            width: 25px;
-            font-size: 18px;
-        }
-
-        .country-item-name {
-            flex: 1;
-        }
-
-        .country-item-currency {
-            color: #718096;
-            font-size: 10px;
         }
 
 
@@ -262,17 +94,14 @@
 
         .auth-button {
             padding: 9px 15px;
-
             border-radius: 8px;
 
             text-decoration: none;
 
             font-size: 12px;
-
             font-weight: 700;
 
-            transition: 0.2s;
-
+            transition: .2s;
             cursor: pointer;
         }
 
@@ -281,17 +110,17 @@
 
             border:
                 1px solid
-                rgba(90, 120, 160, 0.25);
+                rgba(90,120,160,.25);
 
             background:
-                rgba(10, 16, 29, 0.6);
+                rgba(10,16,29,.6);
         }
 
         .login-button:hover {
             color: white;
 
             border-color:
-                rgba(76, 174, 255, 0.4);
+                rgba(76,174,255,.4);
         }
 
         .signup-button,
@@ -311,22 +140,493 @@
 
             border:
                 1px solid
-                rgba(255, 100, 100, 0.2);
+                rgba(255,100,100,.2);
 
             background:
-                rgba(100, 20, 20, 0.15);
+                rgba(100,20,20,.15);
         }
 
         .logout-button:hover {
             color: white;
 
             background:
-                rgba(180, 40, 40, 0.25);
+                rgba(180,40,40,.25);
         }
 
 
         /* =========================
-           PRODUCT IMAGE
+           COUNTRY SELECTOR
+        ========================= */
+
+        .country-wrapper {
+            position: relative;
+        }
+
+        .country-button {
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 0 11px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                rgba(90,120,160,.25);
+
+            background:
+                rgba(10,16,29,.75);
+
+            color: #dce7f5;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .country-flag {
+            font-size: 18px;
+        }
+
+        .country-arrow {
+            color: #718096;
+            font-size: 9px;
+        }
+
+        .country-menu {
+            position: absolute;
+
+            top: calc(100% + 9px);
+            right: 0;
+
+            width: 290px;
+
+            padding: 10px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(90,120,160,.25);
+
+            background:
+                rgba(8,13,24,.98);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.5);
+
+            backdrop-filter: blur(15px);
+
+            z-index: 1000;
+
+            display: none;
+        }
+
+        .country-menu.open {
+            display: block;
+        }
+
+        .country-search {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 10px 12px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                rgba(90,120,160,.25);
+
+            background:
+                rgba(20,29,45,.8);
+
+            color: white;
+
+            outline: none;
+        }
+
+        .country-search::placeholder {
+            color: #718096;
+        }
+
+        .country-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 8px;
+        }
+
+        .country-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 9px 10px;
+
+            border: 0;
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: #cbd6e5;
+
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .country-item:hover {
+            background:
+                rgba(62,157,245,.12);
+
+            color: white;
+        }
+
+        .country-item-name {
+            flex: 1;
+        }
+
+        .country-item-currency {
+            color: #718096;
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            position: relative;
+
+            min-height: 650px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            left: 50%;
+            top: 42%;
+
+            transform:
+                translate(-50%, -50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(50,160,255,.18) 0%,
+                    rgba(50,160,255,.07) 32%,
+                    transparent 70%
+                );
+
+            filter: blur(12px);
+
+            z-index: -2;
+
+            animation:
+                heroGlow
+                5s
+                ease-in-out
+                infinite;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                radial-gradient(
+                    ellipse at center,
+                    black 0%,
+                    transparent 72%
+                );
+
+            z-index: -3;
+        }
+
+        @keyframes heroGlow {
+
+            0%,
+            100% {
+                opacity: .65;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+            }
+
+            50% {
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.15);
+            }
+
+        }
+
+        .hero-content {
+            width: min(900px, 92%);
+
+            text-align: center;
+
+            position: relative;
+            z-index: 5;
+
+            animation:
+                heroEntrance
+                .8s
+                ease-out;
+        }
+
+        @keyframes heroEntrance {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .small-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 14px;
+
+            border-radius: 999px;
+
+            border:
+                1px solid
+                rgba(76,174,255,.28);
+
+            background:
+                rgba(30,100,160,.08);
+
+            color: #68baff;
+
+            font-size: 11px;
+            font-weight: 900;
+
+            letter-spacing: 1.7px;
+
+            margin-bottom: 24px;
+        }
+
+        .hero-content h1 {
+            margin: 0;
+
+            font-size:
+                clamp(50px, 8vw, 92px);
+
+            line-height: .98;
+
+            font-weight: 950;
+
+            letter-spacing: -4px;
+
+            color: white;
+        }
+
+        .hero-content h1 span {
+            display: inline-block;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #3e9df5,
+                    #8bd2ff,
+                    #4caeff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            filter:
+                drop-shadow(
+                    0 0 25px
+                    rgba(62,157,245,.25)
+                );
+        }
+
+
+        /* =========================
+           HERO TEXT
+        ========================= */
+
+        .hero-subtitle {
+            max-width: 760px;
+
+            margin: 25px auto 0;
+
+            color: #9eacc0;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+        .hero-subtitle strong {
+            color: #dcecff;
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           HERO BUTTONS
+        ========================= */
+
+        .hero-buttons {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 32px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            min-width: 185px;
+
+            padding: 14px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3e9df5,
+                    #247bd0
+                );
+
+            border:
+                1px solid
+                rgba(120,205,255,.35);
+
+            font-size: 13px;
+            font-weight: 900;
+
+            box-shadow:
+                0 8px 30px
+                rgba(40,130,220,.22);
+
+            transition: .25s ease;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 13px 40px
+                rgba(40,130,220,.38);
+        }
+
+        .hero-secondary {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 150px;
+
+            padding: 14px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: #aab8ca;
+
+            border:
+                1px solid
+                rgba(90,120,160,.25);
+
+            background:
+                rgba(10,16,29,.55);
+
+            font-size: 13px;
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+        .hero-secondary:hover {
+            color: white;
+
+            border-color:
+                rgba(76,174,255,.4);
+
+            transform: translateY(-3px);
+        }
+
+        .hero-trust {
+            margin-top: 25px;
+
+            color: #64748a;
+
+            font-size: 11px;
+
+            letter-spacing: .5px;
+        }
+
+
+        /* =========================
+           PRODUCT IMAGES
         ========================= */
 
         .product-image {
@@ -337,7 +637,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             overflow: hidden;
@@ -352,21 +651,20 @@
             display: block;
 
             position: relative;
-
             z-index: 2;
 
             filter:
                 drop-shadow(
                     0 0 10px
-                    rgba(70, 170, 255, 0.9)
+                    rgba(70,170,255,.9)
                 )
                 drop-shadow(
                     0 0 25px
-                    rgba(70, 170, 255, 0.65)
+                    rgba(70,170,255,.65)
                 )
                 drop-shadow(
                     0 0 45px
-                    rgba(70, 170, 255, 0.35)
+                    rgba(70,170,255,.35)
                 );
 
             animation:
@@ -375,7 +673,6 @@
                 ease-in-out
                 infinite;
         }
-
 
         @keyframes macroFloat {
 
@@ -393,7 +690,6 @@
             }
 
         }
-
 
         .available-label {
             position: absolute;
@@ -416,8 +712,13 @@
 
         @media (max-width: 700px) {
 
-            .navbar-right {
-                gap: 5px;
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .brand-logo {
+                width: 38px;
+                height: 38px;
             }
 
             .country-button {
@@ -428,23 +729,25 @@
                 display: none;
             }
 
-            .auth-button {
-                padding: 8px 10px;
-                font-size: 11px;
+            .hero {
+                min-height: 570px;
             }
 
-            .brand-logo {
-                width: 38px;
-                height: 38px;
+            .hero-content h1 {
+                letter-spacing: -2px;
             }
 
-            .macro-image {
-                width: 120px;
-                height: 120px;
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-button,
+            .hero-secondary {
+                width: min(280px, 90%);
+                box-sizing: border-box;
             }
 
         }
-
 
         @media (max-width: 500px) {
 
@@ -452,10 +755,14 @@
                 position: fixed;
 
                 top: 65px;
-                right: 10px;
                 left: 10px;
+                right: 10px;
 
                 width: auto;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
             }
 
         }
@@ -474,10 +781,10 @@
 
     <header class="navbar">
 
-
-        <!-- LOGO -->
-
-        <div class="brand">
+        <a
+            href="index.html"
+            class="brand"
+        >
 
             <img
                 src="images/logo.png"
@@ -485,13 +792,17 @@
                 class="brand-logo"
             >
 
-        </div>
+            <span class="brand-name">
+                CxrHFN
+            </span>
+
+        </a>
 
 
         <div class="navbar-right">
 
 
-            <!-- COUNTRY SELECTOR -->
+            <!-- COUNTRY -->
 
             <div class="country-wrapper">
 
@@ -531,10 +842,8 @@
                         type="text"
                         id="countrySearch"
                         class="country-search"
-                        placeholder="Search country..."
-                        autocomplete="off"
+                        placeholder="Search Country Or Currency..."
                     >
-
 
                     <div
                         class="country-list"
@@ -575,7 +884,7 @@
             <div
                 class="nav-actions"
                 id="loggedInButtons"
-                style="display: none;"
+                style="display:none;"
             >
 
                 <a
@@ -607,26 +916,66 @@
 
         <div class="hero-content">
 
+
             <div class="small-tag">
                 ⚡ MINECRAFT MACROS
             </div>
 
+
+            <!-- CHANGED: CPvP -> PvP -->
+
             <h1>
                 Dominate Your
-                <span>CPvP.</span>
+                <span>PvP.</span>
             </h1>
 
-            <p>
-                Powerful and easy-to-use Minecraft macros
-                designed for competitive PvP.
+
+            <p class="hero-subtitle">
+
+                <strong>
+                    Built For Players Who Want Real Advantage
+                </strong>
+
+                — Smooth, Safe, And Powerful Enough To Match Any Playstyle.
+
+                <br><br>
+
+                <strong>
+                    If You Don't Use CxrHFN, You're Missing Your Chance
+                    To Reach A Better Tier.
+                </strong>
+
             </p>
 
-            <a
-                href="#store"
-                class="hero-button"
-            >
-                View CPvP Macro →
-            </a>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#store"
+                    class="hero-button"
+                >
+                    Explore Macros →
+                </a>
+
+                <a
+                    href="cpvp.html"
+                    class="hero-secondary"
+                >
+                    View CPvP Macro
+                </a>
+
+            </div>
+
+
+            <div class="hero-trust">
+
+                ⚡ Smooth Performance
+                &nbsp; • &nbsp;
+                🎯 Competitive Gameplay
+                &nbsp; • &nbsp;
+                🔒 Secure Access
+
+            </div>
 
         </div>
 
@@ -651,7 +1000,7 @@
             </h2>
 
             <p>
-                Start with CPvP. More macros are coming soon.
+                Start With CPvP. More Macros Are Coming Soon.
             </p>
 
         </div>
@@ -660,7 +1009,7 @@
         <div class="products">
 
 
-            <!-- CPVP -->
+            <!-- CPVP MACRO -->
 
             <article class="product-card available">
 
@@ -690,8 +1039,8 @@
                     </h3>
 
                     <p>
-                        A powerful macro designed for
-                        crystal PvP gameplay.
+                        A Powerful Macro Designed For
+                        Crystal PvP Gameplay.
                     </p>
 
 
@@ -718,7 +1067,7 @@
             </article>
 
 
-            <!-- SWORD -->
+            <!-- SWORD MACRO -->
 
             <article class="product-card coming-soon">
 
@@ -744,7 +1093,7 @@
                     </h3>
 
                     <p>
-                        Advanced sword PvP macro.
+                        Advanced Sword PvP Macro.
                     </p>
 
                     <div class="product-bottom">
@@ -760,7 +1109,7 @@
             </article>
 
 
-            <!-- MACE -->
+            <!-- MACE MACRO -->
 
             <article class="product-card coming-soon">
 
@@ -786,7 +1135,7 @@
                     </h3>
 
                     <p>
-                        Powerful mace PvP utilities.
+                        Powerful Mace PvP Utilities.
                     </p>
 
                     <div class="product-bottom">
@@ -802,7 +1151,7 @@
             </article>
 
 
-            <!-- UHC -->
+            <!-- UHC MACRO -->
 
             <article class="product-card coming-soon">
 
@@ -828,7 +1177,7 @@
                     </h3>
 
                     <p>
-                        Useful macros built for UHC gameplay.
+                        Useful Macros Built For UHC Gameplay.
                     </p>
 
                     <div class="product-bottom">
@@ -870,7 +1219,7 @@
                     </h3>
 
                     <p>
-                        Everything in one complete macro pack.
+                        Everything In One Complete Macro Pack.
                     </p>
 
                     <div class="product-bottom">
@@ -902,7 +1251,7 @@
         </div>
 
         <p>
-            Minecraft macros made simple.
+            Minecraft Macros Made Simple.
         </p>
 
         <span>
@@ -913,7 +1262,7 @@
 
 
     <!-- =========================
-         JAVASCRIPT
+         SUPABASE AUTH + COUNTRY
     ========================= -->
 
     <script>
@@ -973,11 +1322,7 @@
             }
 
 
-            const session =
-                data.session;
-
-
-            if (session) {
+            if (data.session) {
 
                 loggedOutButtons.style.display =
                     "none";
@@ -1016,6 +1361,7 @@
 
                 }
 
+
                 updateNavbar();
 
             }
@@ -1024,9 +1370,7 @@
 
         supabaseClient.auth.onAuthStateChange(
             () => {
-
                 updateNavbar();
-
             }
         );
 
@@ -1035,79 +1379,249 @@
 
 
         /* =========================
-           COUNTRY / CURRENCY DATA
+           COUNTRIES
         ========================= */
 
         const countries = [
 
-            { name: "India", flag: "🇮🇳", currency: "INR", symbol: "₹", rate: 1 },
+            {
+                name: "India",
+                flag: "🇮🇳",
+                currency: "INR",
+                symbol: "₹",
+                rate: 1
+            },
 
-            { name: "United States", flag: "🇺🇸", currency: "USD", symbol: "$", rate: 0.0117 },
+            {
+                name: "United States",
+                flag: "🇺🇸",
+                currency: "USD",
+                symbol: "$",
+                rate: 0.0117
+            },
 
-            { name: "United Kingdom", flag: "🇬🇧", currency: "GBP", symbol: "£", rate: 0.0087 },
+            {
+                name: "United Kingdom",
+                flag: "🇬🇧",
+                currency: "GBP",
+                symbol: "£",
+                rate: 0.0087
+            },
 
-            { name: "Canada", flag: "🇨🇦", currency: "CAD", symbol: "C$", rate: 0.016 },
+            {
+                name: "Canada",
+                flag: "🇨🇦",
+                currency: "CAD",
+                symbol: "C$",
+                rate: 0.016
+            },
 
-            { name: "Australia", flag: "🇦🇺", currency: "AUD", symbol: "A$", rate: 0.018 },
+            {
+                name: "Australia",
+                flag: "🇦🇺",
+                currency: "AUD",
+                symbol: "A$",
+                rate: 0.018
+            },
 
-            { name: "Germany", flag: "🇩🇪", currency: "EUR", symbol: "€", rate: 0.010 },
+            {
+                name: "Germany",
+                flag: "🇩🇪",
+                currency: "EUR",
+                symbol: "€",
+                rate: 0.010
+            },
 
-            { name: "France", flag: "🇫🇷", currency: "EUR", symbol: "€", rate: 0.010 },
+            {
+                name: "France",
+                flag: "🇫🇷",
+                currency: "EUR",
+                symbol: "€",
+                rate: 0.010
+            },
 
-            { name: "Italy", flag: "🇮🇹", currency: "EUR", symbol: "€", rate: 0.010 },
+            {
+                name: "Japan",
+                flag: "🇯🇵",
+                currency: "JPY",
+                symbol: "¥",
+                rate: 1.70
+            },
 
-            { name: "Spain", flag: "🇪🇸", currency: "EUR", symbol: "€", rate: 0.010 },
+            {
+                name: "China",
+                flag: "🇨🇳",
+                currency: "CNY",
+                symbol: "¥",
+                rate: 0.084
+            },
 
-            { name: "Netherlands", flag: "🇳🇱", currency: "EUR", symbol: "€", rate: 0.010 },
+            {
+                name: "South Korea",
+                flag: "🇰🇷",
+                currency: "KRW",
+                symbol: "₩",
+                rate: 16.3
+            },
 
-            { name: "Japan", flag: "🇯🇵", currency: "JPY", symbol: "¥", rate: 1.70 },
+            {
+                name: "Singapore",
+                flag: "🇸🇬",
+                currency: "SGD",
+                symbol: "S$",
+                rate: 0.015
+            },
 
-            { name: "China", flag: "🇨🇳", currency: "CNY", symbol: "¥", rate: 0.084 },
+            {
+                name: "United Arab Emirates",
+                flag: "🇦🇪",
+                currency: "AED",
+                symbol: "د.إ",
+                rate: 0.043
+            },
 
-            { name: "South Korea", flag: "🇰🇷", currency: "KRW", symbol: "₩", rate: 16.3 },
+            {
+                name: "Saudi Arabia",
+                flag: "🇸🇦",
+                currency: "SAR",
+                symbol: "﷼",
+                rate: 0.044
+            },
 
-            { name: "Singapore", flag: "🇸🇬", currency: "SGD", symbol: "S$", rate: 0.015 },
+            {
+                name: "New Zealand",
+                flag: "🇳🇿",
+                currency: "NZD",
+                symbol: "NZ$",
+                rate: 0.020
+            },
 
-            { name: "United Arab Emirates", flag: "🇦🇪", currency: "AED", symbol: "د.إ", rate: 0.043 },
+            {
+                name: "Switzerland",
+                flag: "🇨🇭",
+                currency: "CHF",
+                symbol: "CHF",
+                rate: 0.0092
+            },
 
-            { name: "Saudi Arabia", flag: "🇸🇦", currency: "SAR", symbol: "﷼", rate: 0.044 },
+            {
+                name: "South Africa",
+                flag: "🇿🇦",
+                currency: "ZAR",
+                symbol: "R",
+                rate: 0.21
+            },
 
-            { name: "New Zealand", flag: "🇳🇿", currency: "NZD", symbol: "NZ$", rate: 0.020 },
+            {
+                name: "Brazil",
+                flag: "🇧🇷",
+                currency: "BRL",
+                symbol: "R$",
+                rate: 0.064
+            },
 
-            { name: "Switzerland", flag: "🇨🇭", currency: "CHF", symbol: "CHF", rate: 0.0092 },
+            {
+                name: "Mexico",
+                flag: "🇲🇽",
+                currency: "MXN",
+                symbol: "MX$",
+                rate: 0.20
+            },
 
-            { name: "South Africa", flag: "🇿🇦", currency: "ZAR", symbol: "R", rate: 0.21 },
+            {
+                name: "Turkey",
+                flag: "🇹🇷",
+                currency: "TRY",
+                symbol: "₺",
+                rate: 0.47
+            },
 
-            { name: "Brazil", flag: "🇧🇷", currency: "BRL", symbol: "R$", rate: 0.064 },
+            {
+                name: "Thailand",
+                flag: "🇹🇭",
+                currency: "THB",
+                symbol: "฿",
+                rate: 0.38
+            },
 
-            { name: "Mexico", flag: "🇲🇽", currency: "MXN", symbol: "MX$", rate: 0.20 },
+            {
+                name: "Malaysia",
+                flag: "🇲🇾",
+                currency: "MYR",
+                symbol: "RM",
+                rate: 0.050
+            },
 
-            { name: "Turkey", flag: "🇹🇷", currency: "TRY", symbol: "₺", rate: 0.47 },
+            {
+                name: "Indonesia",
+                flag: "🇮🇩",
+                currency: "IDR",
+                symbol: "Rp",
+                rate: 189
+            },
 
-            { name: "Thailand", flag: "🇹🇭", currency: "THB", symbol: "฿", rate: 0.38 },
+            {
+                name: "Philippines",
+                flag: "🇵🇭",
+                currency: "PHP",
+                symbol: "₱",
+                rate: 0.66
+            },
 
-            { name: "Malaysia", flag: "🇲🇾", currency: "MYR", symbol: "RM", rate: 0.050 },
+            {
+                name: "Vietnam",
+                flag: "🇻🇳",
+                currency: "VND",
+                symbol: "₫",
+                rate: 294
+            },
 
-            { name: "Indonesia", flag: "🇮🇩", currency: "IDR", symbol: "Rp", rate: 189 },
+            {
+                name: "Pakistan",
+                flag: "🇵🇰",
+                currency: "PKR",
+                symbol: "Rs",
+                rate: 3.27
+            },
 
-            { name: "Philippines", flag: "🇵🇭", currency: "PHP", symbol: "₱", rate: 0.66 },
+            {
+                name: "Bangladesh",
+                flag: "🇧🇩",
+                currency: "BDT",
+                symbol: "৳",
+                rate: 1.43
+            },
 
-            { name: "Vietnam", flag: "🇻🇳", currency: "VND", symbol: "₫", rate: 294 },
+            {
+                name: "Sri Lanka",
+                flag: "🇱🇰",
+                currency: "LKR",
+                symbol: "Rs",
+                rate: 3.52
+            },
 
-            { name: "Pakistan", flag: "🇵🇰", currency: "PKR", symbol: "Rs", rate: 3.27 },
+            {
+                name: "Nepal",
+                flag: "🇳🇵",
+                currency: "NPR",
+                symbol: "Rs",
+                rate: 1.60
+            },
 
-            { name: "Bangladesh", flag: "🇧🇩", currency: "BDT", symbol: "৳", rate: 1.43 },
-
-            { name: "Sri Lanka", flag: "🇱🇰", currency: "LKR", symbol: "Rs", rate: 3.52 },
-
-            { name: "Nepal", flag: "🇳🇵", currency: "NPR", symbol: "Rs", rate: 1.60 },
-
-            { name: "Russia", flag: "🇷🇺", currency: "RUB", symbol: "₽", rate: 0.94 },
-
-            { name: "Ukraine", flag: "🇺🇦", currency: "UAH", symbol: "₴", rate: 0.49 }
+            {
+                name: "Russia",
+                flag: "🇷🇺",
+                currency: "RUB",
+                symbol: "₽",
+                rate: 0.94
+            }
 
         ];
 
+
+        /* =========================
+           COUNTRY UI
+        ========================= */
 
         const countryButton =
             document.getElementById(
@@ -1140,10 +1654,6 @@
             );
 
 
-        /* =========================
-           RENDER COUNTRIES
-        ========================= */
-
         function renderCountries(
             search = ""
         ) {
@@ -1151,101 +1661,74 @@
             countryList.innerHTML = "";
 
             const query =
-                search
-                    .trim()
-                    .toLowerCase();
+                search.toLowerCase().trim();
 
 
-            const filtered =
-                countries.filter(
+            countries
+                .filter(
                     country =>
+
                         country.name
                             .toLowerCase()
                             .includes(query)
+
                         ||
+
                         country.currency
                             .toLowerCase()
                             .includes(query)
-                );
+                )
+                .forEach(
+                    country => {
 
-
-            filtered.forEach(
-                country => {
-
-                    const button =
-                        document.createElement(
-                            "button"
-                        );
-
-                    button.type =
-                        "button";
-
-                    button.className =
-                        "country-item";
-
-
-                    button.innerHTML = `
-
-                        <span class="country-item-flag">
-                            ${country.flag}
-                        </span>
-
-                        <span class="country-item-name">
-                            ${country.name}
-                        </span>
-
-                        <span class="country-item-currency">
-                            ${country.currency}
-                        </span>
-
-                    `;
-
-
-                    button.addEventListener(
-                        "click",
-                        () => {
-
-                            selectCountry(
-                                country
+                        const button =
+                            document.createElement(
+                                "button"
                             );
 
-                        }
-                    );
+
+                        button.type = "button";
+
+                        button.className =
+                            "country-item";
 
 
-                    countryList.appendChild(
-                        button
-                    );
+                        button.innerHTML = `
 
-                }
-            );
+                            <span>
+                                ${country.flag}
+                            </span>
+
+                            <span class="country-item-name">
+                                ${country.name}
+                            </span>
+
+                            <span class="country-item-currency">
+                                ${country.currency}
+                            </span>
+
+                        `;
 
 
-            if (!filtered.length) {
+                        button.onclick =
+                            () => {
 
-                countryList.innerHTML = `
+                                selectCountry(
+                                    country
+                                );
 
-                    <div
-                        style="
-                            padding:15px;
-                            text-align:center;
-                            color:#718096;
-                            font-size:12px;
-                        "
-                    >
-                        No country found
-                    </div>
+                            };
 
-                `;
 
-            }
+                        countryList.appendChild(
+                            button
+                        );
+
+                    }
+                );
 
         }
 
-
-        /* =========================
-           SELECT COUNTRY
-        ========================= */
 
         function selectCountry(
             country
@@ -1276,78 +1759,65 @@
         }
 
 
-        /* =========================
-           UPDATE PRICES
-        ========================= */
-
         function updatePrices(
             country
         ) {
 
-            const prices =
-                document.querySelectorAll(
+            document
+                .querySelectorAll(
                     "[data-inr]"
-                );
+                )
+                .forEach(
+                    element => {
 
-
-            prices.forEach(
-                priceElement => {
-
-                    const inr =
-                        Number(
-                            priceElement.dataset.inr
-                        );
-
-
-                    let converted =
-                        inr * country.rate;
-
-
-                    if (
-                        country.currency ===
-                        "JPY"
-                        ||
-                        country.currency ===
-                        "KRW"
-                        ||
-                        country.currency ===
-                        "IDR"
-                        ||
-                        country.currency ===
-                        "VND"
-                    ) {
-
-                        converted =
-                            Math.round(
-                                converted
+                        const value =
+                            Number(
+                                element.dataset.inr
                             );
 
-                    } else {
 
-                        converted =
-                            converted.toFixed(
-                                2
-                            );
+                        let converted =
+                            value *
+                            country.rate;
+
+
+                        if (
+                            [
+                                "JPY",
+                                "KRW",
+                                "IDR",
+                                "VND"
+                            ].includes(
+                                country.currency
+                            )
+                        ) {
+
+                            converted =
+                                Math.round(
+                                    converted
+                                );
+
+                        } else {
+
+                            converted =
+                                converted.toFixed(
+                                    2
+                                );
+
+                        }
+
+
+                        element.textContent =
+                            country.symbol +
+                            converted;
 
                     }
-
-
-                    priceElement.textContent =
-                        country.symbol +
-                        converted;
-
-                }
-            );
+                );
 
         }
 
 
-        /* =========================
-           COUNTRY BUTTON
-        ========================= */
-
-        countryButton.addEventListener(
-            "click",
+        countryButton.onclick =
             event => {
 
                 event.stopPropagation();
@@ -1358,24 +1828,20 @@
 
                 countrySearch.focus();
 
-            }
-        );
+            };
 
 
-        countrySearch.addEventListener(
-            "input",
+        countrySearch.oninput =
             () => {
 
                 renderCountries(
                     countrySearch.value
                 );
 
-            }
-        );
+            };
 
 
-        document.addEventListener(
-            "click",
+        document.onclick =
             event => {
 
                 if (
@@ -1390,13 +1856,8 @@
 
                 }
 
-            }
-        );
+            };
 
-
-        /* =========================
-           LOAD SAVED COUNTRY
-        ========================= */
 
         const savedCountry =
             localStorage.getItem(
@@ -1421,11 +1882,9 @@
 
         renderCountries();
 
-
     </script>
 
 
 </body>
 
 </html>
-```
