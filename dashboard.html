@@ -1,567 +1,348 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MacroCraft — Dashboard</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-
-            font-family: Arial, Helvetica, sans-serif;
-
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 50% 20%,
-                    rgba(35, 130, 255, 0.16),
-                    transparent 35%
-                ),
-                #050914;
-        }
-
-
-        /* NAVBAR */
-
-        .navbar {
-            height: 72px;
-
-            padding: 0 7%;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            background: rgba(5, 9, 20, 0.85);
-
-            border-bottom: 1px solid rgba(70, 130, 220, 0.15);
-
-            backdrop-filter: blur(14px);
-
-            position: sticky;
-
-            top: 0;
-
-            z-index: 100;
-        }
-
-
-        .brand {
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            font-size: 21px;
-
-            font-weight: 800;
-        }
-
-
-        .brand-dot {
-            width: 10px;
-
-            height: 10px;
-
-            background: #48a9ff;
-
-            border-radius: 50%;
-
-            box-shadow:
-                0 0 10px #48a9ff,
-                0 0 25px rgba(72, 169, 255, 0.7);
-        }
-
-
-        .logout-button {
-            padding: 9px 15px;
-
-            border-radius: 8px;
-
-            border: 1px solid rgba(90, 120, 160, 0.25);
-
-            background: #0a101d;
-
-            color: #a4b0c2;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-
-        .logout-button:hover {
-            color: white;
-
-            border-color: rgba(76, 174, 255, 0.4);
-
-            transform: translateY(-2px);
-        }
-
-
-        /* MAIN */
-
-        .dashboard {
-            width: min(1100px, 90%);
-
-            margin: 0 auto;
-
-            padding: 70px 0 100px;
-        }
-
-
-        .welcome {
-            margin-bottom: 35px;
-        }
-
-
-        .small-tag {
-            display: inline-block;
-
-            padding: 7px 13px;
-
-            border: 1px solid rgba(72, 169, 255, 0.25);
-
-            border-radius: 30px;
-
-            background: rgba(25, 70, 130, 0.12);
-
-            color: #59b1ff;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            margin-bottom: 18px;
-        }
-
-
-        .welcome h1 {
-            font-size: clamp(36px, 6vw, 58px);
-
-            letter-spacing: -2px;
-
-            margin-bottom: 10px;
-        }
-
-
-        .welcome h1 span {
-            color: #4caeff;
-        }
-
-
-        .welcome p {
-            color: #78859a;
-
-            font-size: 14px;
-        }
-
-
-        /* GRID */
-
-        .dashboard-grid {
-            display: grid;
-
-            grid-template-columns: 1fr 2fr;
-
-            gap: 20px;
-        }
-
-
-        /* CARD */
-
-        .card {
-            padding: 25px;
-
-            background: rgba(10, 16, 29, 0.9);
-
-            border: 1px solid rgba(75, 110, 155, 0.18);
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 15px 45px rgba(0, 0, 0, 0.2);
-        }
-
-
-        .card-title {
-            color: #6f7e94;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            margin-bottom: 20px;
-        }
-
-
-        /* PROFILE */
-
-        .profile-row {
-            padding: 14px 0;
-
-            border-bottom: 1px solid rgba(80, 110, 150, 0.12);
-        }
-
-
-        .profile-row:last-child {
-            border-bottom: none;
-        }
-
-
-        .profile-label {
-            color: #637188;
-
-            font-size: 10px;
-
-            margin-bottom: 5px;
-        }
-
-
-        .profile-value {
-            color: #e7edf7;
-
-            font-size: 14px;
-
-            word-break: break-word;
-        }
-
-
-        /* PURCHASES */
-
-        .empty-purchases {
-            min-height: 220px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-        }
-
-
-        .empty-icon {
-            width: 60px;
-
-            height: 60px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: rgba(62, 157, 245, 0.08);
-
-            border: 1px solid rgba(62, 157, 245, 0.15);
-
-            font-size: 25px;
-
-            margin-bottom: 15px;
-        }
-
-
-        .empty-purchases h3 {
-            font-size: 18px;
-
-            margin-bottom: 7px;
-        }
-
-
-        .empty-purchases p {
-            max-width: 350px;
-
-            color: #66748a;
-
-            font-size: 12px;
-
-            line-height: 1.6;
-        }
-
-
-        .store-button {
-            display: inline-block;
-
-            margin-top: 20px;
-
-            padding: 10px 16px;
-
-            border-radius: 8px;
-
-            background: #3e9df5;
-
-            color: white;
-
-            text-decoration: none;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            transition: 0.2s;
-        }
-
-
-        .store-button:hover {
-            background: #55acff;
-
-            transform: translateY(-2px);
-        }
-
-
-        /* LOADING */
-
-        .loading {
-            color: #68768b;
-
-            font-size: 13px;
-
-            text-align: center;
-
-            padding: 50px 0;
-        }
-
-
-        /* RESPONSIVE */
-
-        @media (max-width: 750px) {
-
-            .navbar {
-                padding: 0 5%;
-            }
-
-            .dashboard {
-                width: 90%;
-
-                padding-top: 45px;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-
-        @media (max-width: 450px) {
-
-            .brand {
-                font-size: 18px;
-            }
-
-            .welcome h1 {
-                font-size: 38px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CxrHFN — Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ min-height:100vh;
+ font-family:Arial,Helvetica,sans-serif;
+ color:#fff;
+ background:radial-gradient(circle at 50% 20%,rgba(35,130,255,.16),transparent 35%),#050914
+}
+.navbar{
+ height:72px;padding:0 7%;display:flex;align-items:center;
+ justify-content:space-between;background:rgba(5,9,20,.88);
+ border-bottom:1px solid rgba(70,130,220,.15);
+ backdrop-filter:blur(14px);position:sticky;top:0;z-index:100
+}
+.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800}
+.brand-dot{
+ width:10px;height:10px;background:#48a9ff;border-radius:50%;
+ box-shadow:0 0 10px #48a9ff,0 0 25px rgba(72,169,255,.7)
+}
+.nav-actions{display:flex;gap:9px;align-items:center}
+.nav-button{
+ padding:9px 15px;border-radius:8px;text-decoration:none;
+ border:1px solid rgba(90,120,160,.25);background:#0a101d;
+ color:#a4b0c2;font-size:12px;font-weight:700;cursor:pointer;transition:.2s
+}
+.nav-button:hover{
+ color:#fff;border-color:rgba(76,174,255,.45);transform:translateY(-2px)
+}
+.home-button{background:#3e9df5;color:#fff;border:0}
+.logout-button{color:#ff9b9b}
+.dashboard{width:min(1100px,90%);margin:auto;padding:60px 0 100px}
+.welcome{margin-bottom:35px}
+.small-tag{
+ display:inline-block;padding:7px 13px;border:1px solid rgba(72,169,255,.25);
+ border-radius:30px;background:rgba(25,70,130,.12);color:#59b1ff;
+ font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:18px
+}
+.welcome h1{font-size:clamp(36px,6vw,58px);letter-spacing:-2px;margin-bottom:10px}
+.welcome h1 span{color:#4caeff}
+.welcome p{color:#78859a;font-size:14px}
+.dashboard-grid{display:grid;grid-template-columns:1fr 2fr;gap:20px}
+.card{
+ padding:25px;background:rgba(10,16,29,.9);
+ border:1px solid rgba(75,110,155,.18);border-radius:15px;
+ box-shadow:0 15px 45px rgba(0,0,0,.2)
+}
+.card-title{
+ color:#6f7e94;font-size:10px;font-weight:700;
+ letter-spacing:1.5px;margin-bottom:20px
+}
+.profile-row{
+ padding:14px 0;border-bottom:1px solid rgba(80,110,150,.12)
+}
+.profile-row:last-child{border-bottom:0}
+.profile-label{color:#637188;font-size:10px;margin-bottom:5px}
+.profile-value{color:#e7edf7;font-size:14px;word-break:break-word}
+.purchases{display:flex;flex-direction:column;gap:12px}
+.purchase{
+ padding:17px;border-radius:12px;
+ background:rgba(15,23,38,.75);
+ border:1px solid rgba(75,110,155,.16)
+}
+.purchase-top{
+ display:flex;align-items:center;justify-content:space-between;gap:15px
+}
+.purchase-name{font-size:15px;font-weight:800}
+.purchase-price{font-size:17px;font-weight:900;color:#4caeff}
+.purchase-info{
+ display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;
+ color:#718096;font-size:11px
+}
+.active{
+ display:inline-block;padding:4px 8px;border-radius:20px;
+ color:#9fffc2;background:rgba(40,180,90,.1);
+ border:1px solid rgba(40,180,90,.2);font-size:9px;font-weight:800
+}
+.empty{
+ min-height:250px;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;text-align:center
+}
+.empty-icon{
+ width:60px;height:60px;display:flex;align-items:center;
+ justify-content:center;border-radius:50%;
+ background:rgba(62,157,245,.08);
+ border:1px solid rgba(62,157,245,.15);
+ font-size:25px;margin-bottom:15px
+}
+.empty h3{font-size:18px;margin-bottom:7px}
+.empty p{max-width:350px;color:#66748a;font-size:12px;line-height:1.6}
+.store-button{
+ display:inline-block;margin-top:20px;padding:10px 16px;border-radius:8px;
+ background:#3e9df5;color:#fff;text-decoration:none;font-size:12px;
+ font-weight:700;transition:.2s
+}
+.store-button:hover{background:#55acff;transform:translateY(-2px)}
+.loading{color:#68768b;font-size:13px;text-align:center;padding:50px 0}
+.error{color:#ff9d9d;font-size:12px;text-align:center;padding:30px}
+@media(max-width:750px){
+ .navbar{padding:0 5%}
+ .dashboard{width:90%;padding-top:45px}
+ .dashboard-grid{grid-template-columns:1fr}
+}
+@media(max-width:450px){
+ .brand{font-size:18px}
+ .nav-button{padding:8px 10px;font-size:11px}
+ .welcome h1{font-size:38px}
+ .purchase-top{align-items:flex-start}
+}
+</style>
 </head>
-
 
 <body>
 
-
-    <!-- NAVBAR -->
-
-    <header class="navbar">
-
-        <div class="brand">
-
-            <span class="brand-dot"></span>
-
-            MacroCraft
-
-        </div>
-
-
-        <button
-            id="logoutButton"
-            class="logout-button">
-
-            Logout
-
-        </button>
-
-    </header>
-
-
-
-    <!-- DASHBOARD -->
-
-    <main class="dashboard">
-
-
-        <!-- WELCOME -->
-
-        <section class="welcome">
-
-            <div class="small-tag">
-                USER DASHBOARD
-            </div>
-
-
-            <h1>
-                Welcome<span>.</span>
-            </h1>
-
-
-            <p id="welcomeEmail">
-                Loading your account...
-            </p>
-
-        </section>
-
-
-
-        <!-- GRID -->
-
-        <div class="dashboard-grid">
-
-
-            <!-- PROFILE -->
-
-            <section class="card">
-
-                <div class="card-title">
-                    ACCOUNT
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        EMAIL
-                    </div>
-
-                    <div
-                        id="userEmail"
-                        class="profile-value">
-
-                        Loading...
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        USERNAME
-                    </div>
-
-                    <div
-                        id="username"
-                        class="profile-value">
-
-                        Not set
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        COUNTRY
-                    </div>
-
-                    <div
-                        id="country"
-                        class="profile-value">
-
-                        India 🇮🇳
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        MEMBER SINCE
-                    </div>
-
-                    <div
-                        id="memberSince"
-                        class="profile-value">
-
-                        Loading...
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- PURCHASES -->
-
-            <section class="card">
-
-                <div class="card-title">
-                    MY PURCHASES
-                </div>
-
-
-                <div id="purchasesArea">
-
-                    <div class="loading">
-                        Loading purchases...
-                    </div>
-
-                </div>
-
-            </section>
-
-
-        </div>
-
-
-    </main>
-
-
-
-    <!-- SUPABASE -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="dashboard.js"></script>
-
+<header class="navbar">
+ <div class="brand">
+  <span class="brand-dot"></span>
+  CxrHFN
+ </div>
+
+ <div class="nav-actions">
+  <a href="index.html" class="nav-button home-button">Home</a>
+  <button id="logoutButton" class="nav-button logout-button">Logout</button>
+ </div>
+</header>
+
+<main class="dashboard">
+
+ <section class="welcome">
+  <div class="small-tag">USER DASHBOARD</div>
+  <h1>Welcome<span>.</span></h1>
+  <p id="welcomeEmail">Loading your account...</p>
+ </section>
+
+ <div class="dashboard-grid">
+
+  <section class="card">
+   <div class="card-title">ACCOUNT</div>
+
+   <div class="profile-row">
+    <div class="profile-label">EMAIL</div>
+    <div id="userEmail" class="profile-value">Loading...</div>
+   </div>
+
+   <div class="profile-row">
+    <div class="profile-label">USERNAME</div>
+    <div id="username" class="profile-value">Not set</div>
+   </div>
+
+   <div class="profile-row">
+    <div class="profile-label">COUNTRY</div>
+    <div id="country" class="profile-value">India 🇮🇳</div>
+   </div>
+
+   <div class="profile-row">
+    <div class="profile-label">MEMBER SINCE</div>
+    <div id="memberSince" class="profile-value">Loading...</div>
+   </div>
+  </section>
+
+  <section class="card">
+   <div class="card-title">MY PURCHASES</div>
+   <div id="purchasesArea">
+    <div class="loading">Loading purchases...</div>
+   </div>
+  </section>
+
+ </div>
+</main>
+
+<script>
+const SUPABASE_URL="https://bcrewixxvendicfxbfpb.supabase.co";
+const SUPABASE_KEY="sb_publishable_u6Hkn8hGCiAue-llQ9pJLA_ZHbwcmas";
+
+const supabaseClient=window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+const userEmail=document.getElementById("userEmail");
+const welcomeEmail=document.getElementById("welcomeEmail");
+const username=document.getElementById("username");
+const country=document.getElementById("country");
+const memberSince=document.getElementById("memberSince");
+const purchasesArea=document.getElementById("purchasesArea");
+const logoutButton=document.getElementById("logoutButton");
+
+async function loadDashboard(){
+
+ const {data,error}=await supabaseClient.auth.getUser();
+
+ if(error||!data.user){
+  window.location.href="login.html";
+  return;
+ }
+
+ const user=data.user;
+ const metadata=user.user_metadata||{};
+
+ userEmail.textContent=user.email||"Not available";
+ welcomeEmail.textContent="Logged in as "+(user.email||"Not available");
+
+ username.textContent=
+  metadata.username||
+  metadata.user_name||
+  "Not set";
+
+ country.textContent=
+  metadata.country==="India"||!metadata.country
+   ?"India 🇮🇳"
+   :metadata.country;
+
+ if(user.created_at){
+  memberSince.textContent=new Date(user.created_at)
+   .toLocaleDateString("en-IN",{
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+   });
+ }
+
+ await loadPurchases(user.id);
+}
+
+async function loadPurchases(userId){
+
+ purchasesArea.innerHTML=
+  '<div class="loading">Loading purchases...</div>';
+
+ /*
+  IMPORTANT:
+  Ye "purchases" table se completed purchases read karta hai.
+  Pending orders ko dashboard par show nahi karta.
+ */
+
+ const {data,error}=await supabaseClient
+  .from("purchases")
+  .select("*")
+  .eq("user_id",userId)
+  .order("created_at",{ascending:false});
+
+ if(error){
+  console.error("Purchase Load Error:",error);
+
+  purchasesArea.innerHTML=
+   '<div class="error">Unable To Load Purchases.<br>Check Your Supabase Purchases Table.</div>';
+
+  return;
+ }
+
+ if(!data||data.length===0){
+  purchasesArea.innerHTML=`
+   <div class="empty">
+    <div class="empty-icon">🛒</div>
+    <h3>No Purchases Yet</h3>
+    <p>Your purchased Minecraft macros will appear here after you complete an order.</p>
+    <a href="index.html" class="store-button">Browse Macros</a>
+   </div>
+  `;
+  return;
+ }
+
+ purchasesArea.innerHTML=
+  '<div class="purchases">'+
+  data.map(p=>{
+
+   const plan=
+    p.plan||
+    p.product_name||
+    p.product||
+    "CPvP Macro";
+
+   const amount=
+    p.amount||
+    p.price||
+    p.order_amount||
+    "";
+
+   const date=p.created_at
+    ?new Date(p.created_at).toLocaleDateString("en-IN",{
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+     })
+    :"";
+
+   return`
+    <div class="purchase">
+     <div class="purchase-top">
+      <div class="purchase-name">${escapeHtml(plan)}</div>
+      <div class="purchase-price">
+       ${amount?"₹"+escapeHtml(String(amount)):""}
+      </div>
+     </div>
+
+     <div class="purchase-info">
+      <span class="active">✓ PURCHASED</span>
+      ${date?`<span>Purchased ${date}</span>`:""}
+     </div>
+    </div>
+   `;
+
+  }).join("")+
+  '</div>';
+}
+
+function escapeHtml(value){
+ return value.replace(/[&<>"']/g,function(char){
+  return{
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[char];
+ });
+}
+
+logoutButton.addEventListener("click",async()=>{
+ logoutButton.disabled=true;
+ logoutButton.textContent="Logging Out...";
+
+ const {error}=await supabaseClient.auth.signOut();
+
+ if(error){
+  console.error(error);
+  logoutButton.disabled=false;
+  logoutButton.textContent="Logout";
+  return;
+ }
+
+ window.location.href="index.html";
+});
+
+loadDashboard();
+</script>
 
 </body>
-
 </html>
+
