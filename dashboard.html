@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +62,7 @@ body{
 .profile-row:last-child{border-bottom:0}
 .profile-label{color:#637188;font-size:10px;margin-bottom:5px}
 .profile-value{color:#e7edf7;font-size:14px;word-break:break-word}
-.purchases{display:flex;flex-direction:column;gap:12px}
+.purchases{display:flex;flex-direction:column;gap:12px;max-height:500px;overflow-y:auto}
 .purchase{
  padding:17px;border-radius:12px;
  background:rgba(15,23,38,.75);
@@ -235,23 +234,19 @@ async function loadPurchases(userId){
  purchasesArea.innerHTML=
   '<div class="loading">Loading purchases...</div>';
 
- /*
-  IMPORTANT:
-  Ye "purchases" table se completed purchases read karta hai.
-  Pending orders ko dashboard par show nahi karta.
- */
-
+ // Querying purchases table with explicitly setting limit range to 1000 items
  const {data,error}=await supabaseClient
   .from("purchases")
   .select("*")
   .eq("user_id",userId)
-  .order("created_at",{ascending:false});
+  .order("created_at",{ascending:false})
+  .range(0,999);
 
  if(error){
   console.error("Purchase Load Error:",error);
 
   purchasesArea.innerHTML=
-   '<div class="error">Unable To Load Purchases.<br>Check Your Supabase Purchases Table.</div>';
+   '<div class="error">Unable To Load Purchases.<br>Check Your Supabase Purchases Table RLS Policies.</div>';
 
   return;
  }
@@ -345,4 +340,3 @@ loadDashboard();
 
 </body>
 </html>
-
